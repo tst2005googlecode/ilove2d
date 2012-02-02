@@ -18,38 +18,16 @@
 * 3. This notice may not be removed or altered from any source distribution.
 **/
 
-#ifndef LOVE_THREAD_SDL_WRAP_THREAD_H
-#define LOVE_THREAD_SDL_WRAP_THREAD_H
+#ifndef DELAY_H_
+#define DELAY_H_
 
-// LOVE
-#include <common/config.h>
-#include "Thread.h"
+#include <thread/threads.h>
 
-namespace love
-{
-	extern StringMap<Type, TYPE_MAX_ENUM> types;
-namespace thread
-{
-	Thread *luax_checkthread(lua_State *L, int idx);
-	int w_Thread_start(lua_State *L);
-	int w_Thread_kill(lua_State *L);
-	int w_Thread_wait(lua_State *L);
-	int w_Thread_getName(lua_State *L);
-	int w_Thread_get(lua_State *L);
-	int w_Thread_getKeys(lua_State *L);
-	int w_Thread_demand(lua_State *L);
-	int w_Thread_peek(lua_State *L);
-	int w_Thread_set(lua_State *L);
 
-	int luaopen_thread(lua_State *L);
+namespace love {
 
-	int w_newThread(lua_State *L);
-	int w_getThreads(lua_State *L);
-	int w_getThread(lua_State *L);
+	void delay(unsigned int ms);
 
-	extern "C" LOVE_EXPORT int luaopen_love_thread(lua_State * L);
+}; // namespace love
 
-} // thread
-} // love
-
-#endif // LOVE_THREAD_SDL_WRAP_THREAD_H
+#endif /* DELAY_H_ */

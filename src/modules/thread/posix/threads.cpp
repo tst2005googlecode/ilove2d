@@ -17,7 +17,7 @@
 *    misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 **/
-
+#include "common/config.h"
 #include "threads.h"
 #ifdef LOVE_IOS
 #include <common/delay.h> // for Mac OS X's fake sem_timedwait

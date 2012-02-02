@@ -18,38 +18,24 @@
 * 3. This notice may not be removed or altered from any source distribution.
 **/
 
-#ifndef LOVE_THREAD_SDL_WRAP_THREAD_H
-#define LOVE_THREAD_SDL_WRAP_THREAD_H
 
-// LOVE
-#include <common/config.h>
-#include "Thread.h"
+#include "delay.h"
 
-namespace love
-{
-	extern StringMap<Type, TYPE_MAX_ENUM> types;
-namespace thread
-{
-	Thread *luax_checkthread(lua_State *L, int idx);
-	int w_Thread_start(lua_State *L);
-	int w_Thread_kill(lua_State *L);
-	int w_Thread_wait(lua_State *L);
-	int w_Thread_getName(lua_State *L);
-	int w_Thread_get(lua_State *L);
-	int w_Thread_getKeys(lua_State *L);
-	int w_Thread_demand(lua_State *L);
-	int w_Thread_peek(lua_State *L);
-	int w_Thread_set(lua_State *L);
+namespace love {
 
-	int luaopen_thread(lua_State *L);
+	void delay(unsigned int ms) {
+#if LOVE_THREADS == LOVE_THREADS_POSIX
+		struct timespec ts1, ts2;
 
-	int w_newThread(lua_State *L);
-	int w_getThreads(lua_State *L);
-	int w_getThread(lua_State *L);
+		ts1.tv_sec = ms / 1000;
+		ts1.tv_nsec = (ms % 1000) * 1000000;
+		// FIXME: handle signals
+		nanosleep(&ts1, &ts2);
+#elif LOVE_THREADS == LOVE_THREADS_WIN32
+		Sleep(ms);
+#elif LOVE_THREADS == LOVE_THREADS_SDL
+		SDL_Delay(ms);
+#endif
+	}
 
-	extern "C" LOVE_EXPORT int luaopen_love_thread(lua_State * L);
-
-} // thread
-} // love
-
-#endif // LOVE_THREAD_SDL_WRAP_THREAD_H
+} // namespace love

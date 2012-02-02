@@ -21,11 +21,11 @@
 #include <common/config.h>
 
 #include "Thread.h"
-
+#include "wrap_Thread.h"
 #ifdef LOVE_BUILD_STANDALONE
 extern "C" int luaopen_love(lua_State * L);
 #endif // LOVE_BUILD_STANDALONE
-extern "C" int luaopen_love_thread(lua_State *L);
+//extern "C" int luaopen_love_thread(lua_State *L);
 
 namespace love
 {
@@ -368,7 +368,7 @@ namespace thread
 
 	const char *ThreadModule::getName() const
 	{
-		return "love.thread.sdl";
+		return "love.thread.posix";
 	}
 
 } // thread

@@ -7,7 +7,7 @@ require("lua/game.lua")
 function love.load() 
  	
 	-- Variables
-	debug = true
+	debug = false
 	audio = true			-- whether audio should be on or off
 	state = Menu.create()	-- current game state
 	

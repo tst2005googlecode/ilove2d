@@ -23,7 +23,7 @@
 
 // Platform stuff.
 #define LOVE_IOS 1
-
+#define LOVE_HEADLESS
 // Endianness.
 #define LOVE_LITTLE_ENDIAN 1
 
