@@ -13,6 +13,10 @@
 		28FD14FE0DC6FC130079059D /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
+		290ACFCD14DAD09D00DA4621 /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290ACFCB14DAD09C00DA4621 /* threads.cpp */; };
+		290ACFD214DAD0B000DA4621 /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290ACFCF14DAD0B000DA4621 /* Thread.cpp */; };
+		290ACFD314DAD0B000DA4621 /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290ACFD014DAD0B000DA4621 /* threads.cpp */; };
+		290ACFD414DAD0B000DA4621 /* wrap_Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290ACFD114DAD0B000DA4621 /* wrap_Thread.cpp */; };
 		290DD9ED146D9FEC0042EF27 /* love2d_s.png in Resources */ = {isa = PBXBuildFile; fileRef = 290DD9EC146D9FEC0042EF27 /* love2d_s.png */; };
 		290DD9EF146DA0020042EF27 /* love2d.png in Resources */ = {isa = PBXBuildFile; fileRef = 290DD9EE146DA0020042EF27 /* love2d.png */; };
 		5252D1E814C6802D00C0A989 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9086C9D11F2CD62007B000A /* Event.cpp */; };
@@ -192,6 +196,14 @@
 		28FD14FD0DC6FC130079059D /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = EAGLView.mm; path = ../../../../platform/ios/Classes/EAGLView.mm; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		290ACFCB14DAD09C00DA4621 /* threads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threads.cpp; sourceTree = "<group>"; };
+		290ACFCC14DAD09C00DA4621 /* threads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threads.h; sourceTree = "<group>"; };
+		290ACFCF14DAD0B000DA4621 /* Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Thread.cpp; sourceTree = "<group>"; };
+		290ACFD014DAD0B000DA4621 /* threads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threads.cpp; sourceTree = "<group>"; };
+		290ACFD114DAD0B000DA4621 /* wrap_Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wrap_Thread.cpp; sourceTree = "<group>"; };
+		290ACFD514DAD0C000DA4621 /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Thread.h; sourceTree = "<group>"; };
+		290ACFD614DAD0C000DA4621 /* threads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threads.h; sourceTree = "<group>"; };
+		290ACFD714DAD0C000DA4621 /* wrap_Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wrap_Thread.h; sourceTree = "<group>"; };
 		290DD9EC146D9FEC0042EF27 /* love2d_s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = love2d_s.png; sourceTree = "<group>"; };
 		290DD9EE146DA0020042EF27 /* love2d.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = love2d.png; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -608,6 +620,15 @@
 				1D6058910D05DD3D006BFB54 /* love.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		290ACFCA14DAD09C00DA4621 /* posix */ = {
+			isa = PBXGroup;
+			children = (
+				290ACFCB14DAD09C00DA4621 /* threads.cpp */,
+				290ACFCC14DAD09C00DA4621 /* threads.h */,
+			);
+			path = posix;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
@@ -1258,6 +1279,13 @@
 		A9086DBC11F2CD62007B000A /* thread */ = {
 			isa = PBXGroup;
 			children = (
+				290ACFD514DAD0C000DA4621 /* Thread.h */,
+				290ACFD614DAD0C000DA4621 /* threads.h */,
+				290ACFD714DAD0C000DA4621 /* wrap_Thread.h */,
+				290ACFCF14DAD0B000DA4621 /* Thread.cpp */,
+				290ACFD014DAD0B000DA4621 /* threads.cpp */,
+				290ACFD114DAD0B000DA4621 /* wrap_Thread.cpp */,
+				290ACFCA14DAD09C00DA4621 /* posix */,
 				A9086DBD11F2CD62007B000A /* sdl */,
 				A9086DC211F2CD62007B000A /* ThreadModule.h */,
 			);
@@ -1598,6 +1626,10 @@
 				52D59E3814C3EFAD003AAB7E /* Mouse.mm in Sources */,
 				52D59E3914C3EFAD003AAB7E /* wrap_Mouse.cpp in Sources */,
 				5252D1EE14C6B4EC00C0A989 /* FSDL_Events.cpp in Sources */,
+				290ACFCD14DAD09D00DA4621 /* threads.cpp in Sources */,
+				290ACFD214DAD0B000DA4621 /* Thread.cpp in Sources */,
+				290ACFD314DAD0B000DA4621 /* threads.cpp in Sources */,
+				290ACFD414DAD0B000DA4621 /* wrap_Thread.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

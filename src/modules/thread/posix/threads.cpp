@@ -19,7 +19,7 @@
 **/
 
 #include "threads.h"
-#ifdef LOVE_MACOSX
+#ifdef LOVE_IOS
 #include <common/delay.h> // for Mac OS X's fake sem_timedwait
 #endif
 
@@ -125,7 +125,7 @@ namespace thread
 			return !sem_trywait(&sem);
 		else
 		{
-#ifdef LOVE_MACOSX
+#ifdef LOVE_IOS
 			// OS X lacks sem_timedwait, so we fake it with a busy loop
 			time_t timer = time(NULL)*1000 + timeout;
 			int retval = 0;

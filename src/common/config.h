@@ -34,6 +34,11 @@
 //#	define LOVE_BUILD_DLL
 #endif
 
+
+#ifndef LOVE_UNUSED
+#	define LOVE_UNUSED(x) (void)sizeof(x)
+#endif
+
 // DLL-stuff.
 #define LOVE_EXPORT
 
