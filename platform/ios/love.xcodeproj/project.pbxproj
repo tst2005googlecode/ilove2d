@@ -16,6 +16,8 @@
 		290DD9ED146D9FEC0042EF27 /* love2d_s.png in Resources */ = {isa = PBXBuildFile; fileRef = 290DD9EC146D9FEC0042EF27 /* love2d_s.png */; };
 		290DD9EF146DA0020042EF27 /* love2d.png in Resources */ = {isa = PBXBuildFile; fileRef = 290DD9EE146DA0020042EF27 /* love2d.png */; };
 		293EFCD614DADE4600BF95B1 /* delay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 293EFCD414DADE4600BF95B1 /* delay.cpp */; };
+		2948334A14DB05D8008AF35C /* Love.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2948334814DB05D8008AF35C /* Love.icns */; };
+		2948334B14DB05D8008AF35C /* LoveDocument.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2948334914DB05D8008AF35C /* LoveDocument.icns */; };
 		29CCCC3714DAE5FD00F0460E /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CCCC2C14DAE5FD00F0460E /* Thread.cpp */; };
 		29CCCC3814DAE5FD00F0460E /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CCCC2E14DAE5FD00F0460E /* threads.cpp */; };
 		29CCCC3A14DAE5FD00F0460E /* wrap_Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CCCC3314DAE5FD00F0460E /* wrap_Thread.cpp */; };
@@ -195,6 +197,8 @@
 		290DD9EE146DA0020042EF27 /* love2d.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = love2d.png; sourceTree = "<group>"; };
 		293EFCD414DADE4600BF95B1 /* delay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = delay.cpp; sourceTree = "<group>"; };
 		293EFCD514DADE4600BF95B1 /* delay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = delay.h; sourceTree = "<group>"; };
+		2948334814DB05D8008AF35C /* Love.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Love.icns; sourceTree = "<group>"; };
+		2948334914DB05D8008AF35C /* LoveDocument.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = LoveDocument.icns; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29CCCC2714DAE5FD00F0460E /* threads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threads.cpp; sourceTree = "<group>"; };
 		29CCCC2814DAE5FD00F0460E /* threads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threads.h; sourceTree = "<group>"; };
@@ -631,6 +635,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2948334814DB05D8008AF35C /* Love.icns */,
+				2948334914DB05D8008AF35C /* LoveDocument.icns */,
 				52E4B69E14D79D4B00E9FD2E /* towerstrap */,
 				8D1107310486CEB800E47090 /* love-Info.plist */,
 			);
@@ -1425,6 +1431,8 @@
 				290DD9ED146D9FEC0042EF27 /* love2d_s.png in Resources */,
 				290DD9EF146DA0020042EF27 /* love2d.png in Resources */,
 				52E4B69F14D79D4B00E9FD2E /* towerstrap in Resources */,
+				2948334A14DB05D8008AF35C /* Love.icns in Resources */,
+				2948334B14DB05D8008AF35C /* LoveDocument.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1617,7 +1625,7 @@
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "love-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/physfs\"",
@@ -1659,7 +1667,7 @@
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "love-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/physfs\"",

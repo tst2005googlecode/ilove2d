@@ -12,8 +12,8 @@
 	<string></string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>love2d_s.png</string>
-		<string>love2d.png</string>
+		<string>love.icns</string>
+		<string>love.icns</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
