@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "1.0">
+   <FileBreakpoints>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "0"
+         filePath = "/Users/wanguangming/Downloads/favormm-love2d-iphone-7d2fed5a607b/src/modules/audio/openal/Audio.cpp"
+         timestampString = "343757105.990258"
+         startingColumnNumber = "2147483647"
+         endingColumnNumber = "2147483647"
+         startingLineNumber = "50"
+         endingLineNumber = "50"
+         landmarkName = "Audio::Audio()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "0"
+         filePath = "/Users/wanguangming/Downloads/favormm-love2d-iphone-7d2fed5a607b/src/modules/audio/wrap_Audio.cpp"
+         timestampString = "344037856.324447"
+         startingColumnNumber = "2147483647"
+         endingColumnNumber = "2147483647"
+         startingLineNumber = "268"
+         endingLineNumber = "268"
+         landmarkName = "luaopen_love_audio(lua_State * L)"
+         landmarkType = "7">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "0"
+         filePath = "/Users/wanguangming/Downloads/favormm-love2d-iphone-7d2fed5a607b/src/modules/audio/wrap_Audio.cpp"
+         timestampString = "344038049.958296"
+         startingColumnNumber = "2147483647"
+         endingColumnNumber = "2147483647"
+         startingLineNumber = "273"
+         endingLineNumber = "273"
+         landmarkName = "luaopen_love_audio(lua_State * L)"
+         landmarkType = "7">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "0"
+         filePath = "/Users/wanguangming/Downloads/favormm-love2d-iphone-7d2fed5a607b/src/modules/audio/openal/Audio.cpp"
+         timestampString = "344038154.253792"
+         startingColumnNumber = "2147483647"
+         endingColumnNumber = "2147483647"
+         startingLineNumber = "35"
+         endingLineNumber = "35"
+         landmarkName = "Audio::Audio()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "0"
+         filePath = "/Users/wanguangming/Downloads/favormm-love2d-iphone-7d2fed5a607b/src/modules/audio/openal/Source.cpp"
+         timestampString = "344055569.339414"
+         startingColumnNumber = "2147483647"
+         endingColumnNumber = "2147483647"
+         startingLineNumber = "60"
+         endingLineNumber = "60"
+         landmarkName = "Source::Source(Pool * pool, love::sound::Decoder * decoder)"
+         landmarkType = "5">
+      </FileBreakpoint>
+   </FileBreakpoints>
+</Bucket>
