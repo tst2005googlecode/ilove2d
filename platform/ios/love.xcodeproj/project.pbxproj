@@ -21,6 +21,8 @@
 		29CCCC3714DAE5FD00F0460E /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CCCC2C14DAE5FD00F0460E /* Thread.cpp */; };
 		29CCCC3814DAE5FD00F0460E /* threads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CCCC2E14DAE5FD00F0460E /* threads.cpp */; };
 		29CCCC3A14DAE5FD00F0460E /* wrap_Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CCCC3314DAE5FD00F0460E /* wrap_Thread.cpp */; };
+		524291BD14DBB00D00C44436 /* Love_s.png in Resources */ = {isa = PBXBuildFile; fileRef = 524291BB14DBB00C00C44436 /* Love_s.png */; };
+		524291BE14DBB00D00C44436 /* Love.png in Resources */ = {isa = PBXBuildFile; fileRef = 524291BC14DBB00C00C44436 /* Love.png */; };
 		5252D1E814C6802D00C0A989 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9086C9D11F2CD62007B000A /* Event.cpp */; };
 		5252D1E914C6802D00C0A989 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9086CA011F2CD62007B000A /* Event.cpp */; };
 		5252D1EA14C6802D00C0A989 /* wrap_Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9086CA211F2CD62007B000A /* wrap_Event.cpp */; };
@@ -211,15 +213,8 @@
 		32CA4F630368D1EE00C91783 /* love_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = love_Prefix.pch; sourceTree = "<group>"; };
 		5242919014DA907300C44436 /* delay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = delay.h; sourceTree = "<group>"; };
 		5242919114DA90FC00C44436 /* delay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = delay.cpp; sourceTree = "<group>"; };
-		5242919614DA958800C44436 /* Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Thread.cpp; sourceTree = "<group>"; };
-		5242919714DA958800C44436 /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Thread.h; sourceTree = "<group>"; };
-		5242919814DA958800C44436 /* ThreadModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadModule.h; sourceTree = "<group>"; };
-		5242919A14DA958800C44436 /* threads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threads.cpp; sourceTree = "<group>"; };
-		5242919B14DA958800C44436 /* threads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threads.h; sourceTree = "<group>"; };
-		524291A514DA958800C44436 /* threads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threads.cpp; sourceTree = "<group>"; };
-		524291A614DA958800C44436 /* threads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threads.h; sourceTree = "<group>"; };
-		524291A714DA958800C44436 /* wrap_Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wrap_Thread.cpp; sourceTree = "<group>"; };
-		524291A814DA958800C44436 /* wrap_Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wrap_Thread.h; sourceTree = "<group>"; };
+		524291BB14DBB00C00C44436 /* Love_s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Love_s.png; sourceTree = "<group>"; };
+		524291BC14DBB00C00C44436 /* Love.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Love.png; sourceTree = "<group>"; };
 		5252D1EC14C6B46000C0A989 /* FSDL_Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSDL_Events.h; sourceTree = "<group>"; };
 		5252D1ED14C6B4EC00C0A989 /* FSDL_Events.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSDL_Events.cpp; sourceTree = "<group>"; };
 		52D59E3014C3EFAD003AAB7E /* Mouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse.cpp; sourceTree = "<group>"; };
@@ -622,6 +617,10 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				524291BB14DBB00C00C44436 /* Love_s.png */,
+				524291BC14DBB00C00C44436 /* Love.png */,
+				2948334814DB05D8008AF35C /* Love.icns */,
+				2948334914DB05D8008AF35C /* LoveDocument.icns */,
 				290DD9EE146DA0020042EF27 /* love2d.png */,
 				290DD9EC146D9FEC0042EF27 /* love2d_s.png */,
 				A9086C3511F2CD61007B000A /* src */,
@@ -646,8 +645,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2948334814DB05D8008AF35C /* Love.icns */,
-				2948334914DB05D8008AF35C /* LoveDocument.icns */,
 				52E4B69E14D79D4B00E9FD2E /* towerstrap */,
 				8D1107310486CEB800E47090 /* love-Info.plist */,
 			);
@@ -1446,6 +1443,8 @@
 				52E4B69F14D79D4B00E9FD2E /* towerstrap in Resources */,
 				2948334A14DB05D8008AF35C /* Love.icns in Resources */,
 				2948334B14DB05D8008AF35C /* LoveDocument.icns in Resources */,
+				524291BD14DBB00D00C44436 /* Love_s.png in Resources */,
+				524291BE14DBB00D00C44436 /* Love.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1638,7 +1637,7 @@
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "love-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/physfs\"",
@@ -1680,7 +1679,7 @@
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "love-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/physfs\"",

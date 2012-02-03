@@ -200,12 +200,7 @@ function Game:draw()
 	
 	--draw ±³¾°
 	love.graphics.draw(graphics["battle_bg"], 0, 0)
- 
-	if(debug) then	
-		love.graphics.setColor(color["text"])
-		--love.graphics.setFont(font["tiny"])
-		
-		love.graphics.setFont(font["impact"])
+    love.graphics.setFont(font["impact"])
 		-- Draw the current FPS.
 		love.graphics.setColor(color["text"])
 		--if(time_UpdateCapiton <=0) then
@@ -213,6 +208,11 @@ function Game:draw()
 		--end
 		
 		love.graphics.setFont(font["tiny"])
+	if(debug) then	
+		love.graphics.setColor(color["text"])
+		--love.graphics.setFont(font["tiny"])
+		
+		
 			
 		love.graphics.print("mousepoint(x: " .. self.mousepointer.x .. ",y:" .. self.mousepointer.y,100*1.6, 180*1.6)
 		love.graphics.print(string.format("gridpoint(x:%d,y:%d-%d)",self.gridpointer.x,self.gridpointer.y,self.gridpointer.y * grid_col + self.gridpointer.x),100*1.6, 200*1.6)
