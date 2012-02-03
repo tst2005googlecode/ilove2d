@@ -48,7 +48,7 @@ function Radar:update(dt)
 
 
 	if(self.ballet == false and self.shoot_time <=0 and foundenemyscount > 0) then -- œ‘ æ¿◊¥Ô…®√Ë
-		love.audio.play(sound["radar_fire"], 1)
+		love.audio.play(sound["radar_fire"])
 		self.shoot_time = shoot_time
 		ballet = Ballet.create(6, self,self.blockhouse.x ,self.blockhouse.y ,self)
    		table.insert(state.ballets , ballet)

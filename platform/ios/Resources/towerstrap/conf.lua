@@ -19,5 +19,6 @@ function love.conf(t)
     t.modules.mouse = true      -- Enable the mouse module (boolean)
     t.modules.sound = true      -- Enable the sound module (boolean)
     t.modules.physics = false    -- Enable the physics module (boolean)
+    t.modules.thread = false
     t.modules.thread = true
 end

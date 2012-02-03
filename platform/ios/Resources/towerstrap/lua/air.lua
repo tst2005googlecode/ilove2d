@@ -56,7 +56,7 @@ function Air:FindTargetsAndFire()
 		(math.abs(e.x - self.blockhouse.x) <= range and math.abs(e.y - self.blockhouse.y) <= range)) then
             firecount = firecount + 1
 			e.locked = e.locked + 1
-		    love.audio.play(sound["air_fire"], 1)
+		    love.audio.play(sound["air_fire"])
 			ballet = Ballet.create(4, self,self.blockhouse.x ,self.blockhouse.y ,e)
 			ballet.angle = aoff
 			aoff = aoff + 30

@@ -85,7 +85,7 @@ function Rocket:update(dt)
 			self.blockhouse.angle = angle - 90 * dt  + 90
     	end
 		if(self.shoot_time <=0 and math.abs(self.blockhouse.angle - 90 - angle)<5 ) then -- ·¢Éä×Óµ¯
-   			love.audio.play(sound["rocket_fire"], 1)
+   			love.audio.play(sound["rocket_fire"])
       		self.shoot_time = shoot_time
    			table.insert(state.ballets , Ballet.create(1, self,self.blockhouse.x ,self.blockhouse.y ,self.target))
 		end

@@ -50,7 +50,7 @@ function EarthQuake:update(dt)
 		end
 
   		if(self.shoot_time <=0) then -- ÖÆÔìµØÕð 
-   			love.audio.play(sound["earthquake_fire"], 1)
+   			love.audio.play(sound["earthquake_fire"])
    			self.shoot_time  = shoot_time
    			self.blockhouse.earthquake_action_r = 6
    			ballet =  Ballet.create(5, self,self.blockhouse.x ,self.blockhouse.y ,self.target)

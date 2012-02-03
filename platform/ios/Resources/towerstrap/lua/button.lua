@@ -36,8 +36,8 @@ function Button:draw()
 	end
 	
 	love.graphics.print(self.text, self.x, self.y)
-	love.graphics.setLine(1,"rough")
-	love.graphics.rectangle( "line", self.x, self.y, self.x + self.width,  self.y + self.height ) 
+	--love.graphics.setLine(1,"rough")
+	--love.graphics.rectangle( "line", self.x, self.y, self.x + self.width,  self.y + self.height ) 
 end
 
 function Button:update(dt)

@@ -33,6 +33,7 @@
 #	define LOVE_BUILD_EXE
 //#	define LOVE_BUILD_DLL
 #endif
+#define LOVE_HEADLESS
 
 
 #ifndef LOVE_UNUSED

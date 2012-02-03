@@ -16,7 +16,7 @@ time_UpdateCapiton = 0
 
 function Game.create()
 	
-	love.audio.play(music["game"], 1)
+	love.audio.play(music["game"])
 	
 	local temp = {}
 	setmetatable(temp, Game)
@@ -514,7 +514,7 @@ function Game:update(dt)
 						e.health = e.health - damage
 						if(e.health <=0) then
 							b.host.target = nil
-							love.audio.play(sound["creature_die"], 1)
+							love.audio.play(sound["creature_die"])
 							self.scope = self.scope + e.award
 							self.money = self.money + e.money
 							table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
@@ -526,7 +526,7 @@ function Game:update(dt)
 							e.health = e.health - damage
 							if(e.health <=0) then
 								b.host.target = nil
-								love.audio.play(sound["creature_die"], 1)
+								love.audio.play(sound["creature_die"])
 								self.scope = self.scope + e.award
 								self.money = self.money + e.money
 								table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
@@ -539,7 +539,7 @@ function Game:update(dt)
 						e.health = e.health - damage
 						if(e.health <=0) then
 							b.host.target = nil
-							love.audio.play(sound["creature_die"], 1)
+							love.audio.play(sound["creature_die"])
 							self.scope = self.scope + e.award
 							self.money = self.money + e.money
 							table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
@@ -551,7 +551,7 @@ function Game:update(dt)
 						e.health = e.health - damage
 						if(e.health <=0) then
 							b.host.target = nil
-							love.audio.play(sound["creature_die"], 1)
+							love.audio.play(sound["creature_die"])
 							self.scope = self.scope + e.award
 							self.money = self.money + e.money
 							table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
@@ -564,7 +564,7 @@ function Game:update(dt)
 							e.health = e.health - damage
 							if(e.health <=0) then
 								b.host.target = nil
-								love.audio.play(sound["creature_die"], 1)
+								love.audio.play(sound["creature_die"])
 								self.scope = self.scope + e.award
 								self.money = self.money + e.money
 								table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
@@ -628,7 +628,7 @@ function Game:switchStage(dt)
 				local creature =  Creature.create(self, self.stages[self.stage].creature,x,y,true)
 				table.insert(self.enemys,creature)
 			end
-			love.audio.play(sound["next_level"], 1)
+			love.audio.play(sound["next_level"])
 		end
 	end
 	self.time = self.time - dt
