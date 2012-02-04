@@ -34,8 +34,7 @@ end
 
 function Ballet:draw()
 	
-	if self.type == 0 then
-		--love.graphics.draw(graphics.rocket_fire, self.x, self.y)
+	if self.type == 0 then --gun
 		love.graphics.setColor(color.black)
 		love.graphics.circle( "fill", self.x, self.y, 2,255 ) 
 	elseif self.type == 1 then --rocket
@@ -68,7 +67,7 @@ function Ballet:update(dt)
     elseif self.type ==6 then -- radar
         self:radarMove(dt)
 	else
-        self:gunTraceMove(dt)
+        self:gunTraceMove(dt,self.type) -- gun,shock
 	end
 
 end
@@ -137,8 +136,10 @@ function Ballet:gunTraceMove(dt)
 	end
 	if self.target.x - self.x < 8 and self.target.y - self.y < 8 then
 	    self.live = 0 -- ÃüÖÐÄ¿±ê
-	    self.target.slowly = true
-	    self.target.slowly_time = 60
+		if(self.type == 3 ) then--shock
+			self.target.slowly = true
+			self.target.slowly_time = 60
+		end
 	end
 end
 function Ballet:aimTraceMove(dt)
