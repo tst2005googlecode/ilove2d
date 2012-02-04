@@ -14,6 +14,9 @@ size = 8
 
 time_UpdateCapiton = 0
 
+debugareax = 490
+debugareay = 760
+
 function Game.create()
 	
 	love.audio.play(music["game"])
@@ -200,23 +203,37 @@ function Game:draw()
 	
 	--draw ±³¾°
 	love.graphics.draw(graphics["battle_bg"], 0, 0)
-    love.graphics.setFont(font["impact"])
-		-- Draw the current FPS.
-		love.graphics.setColor(color["text"])
-		--if(time_UpdateCapiton <=0) then
-			love.graphics.print("Towers Trap - [FPS: " .. love.timer.getFPS() .."]",30,30)
-		--end
+    
+	-- Draw the current FPS.
+	if(not debug) then
+	love.graphics.setFont(font["tiny"])
+	love.graphics.setColor(color["text"])
+	--if(time_UpdateCapiton <=0) then
+		love.graphics.print("Towers Trap - [FPS: " .. love.timer.getFPS() .."]",0, 0)
+	--end
+	end	
 		
-		love.graphics.setFont(font["tiny"])
 	if(debug) then	
-		love.graphics.setColor(color["text"])
-		--love.graphics.setFont(font["tiny"])
-		
-		
-			
-		love.graphics.print("mousepoint(x: " .. self.mousepointer.x .. ",y:" .. self.mousepointer.y,100*1.6, 180*1.6)
-		love.graphics.print(string.format("gridpoint(x:%d,y:%d-%d)",self.gridpointer.x,self.gridpointer.y,self.gridpointer.y * grid_col + self.gridpointer.x),100*1.6, 200*1.6)
+		love.graphics.setFont(font["tiny"])
+		love.graphics.setColor(color["menu_bg"])
+		love.graphics.setLine(1)
+		love.graphics.rectangle( "fill", debugareax, debugareay, love.graphics.getWidth( ) , love.graphics.getHeight( )-4 ) 
 	
+		love.graphics.setColor(color["text"])
+		love.graphics.print("Towers Trap - [FPS: " .. love.timer.getFPS() .."]",debugareax, debugareay)
+		
+		love.graphics.print("mousepoint(x: " .. self.mousepointer.x .. ",y:" .. self.mousepointer.y,debugareax, debugareay+20)
+		love.graphics.print(string.format("gridpoint(x:%d,y:%d-%d)",self.gridpointer.x,self.gridpointer.y,self.gridpointer.y * grid_col + self.gridpointer.x),debugareax, debugareay+40)
+	
+		if not self.weapons.hover then
+			love.graphics.print("weapons leave", debugareax, debugareay+60) 
+		else
+ 			love.graphics.print("weapons hover", debugareax, debugareay+60) 
+		end
+		
+		love.graphics.setColor(color["menu_bg"])
+		love.graphics.print("weapons selected: " .. self.weapons.selected, debugareax, debugareay+80) 
+ 
 		-- draw grid
 		love.graphics.setLine( 1 )
 	    love.graphics.setLineStyle( "smooth" )
@@ -288,13 +305,13 @@ function Game:draw()
 	-- draw Time
 	love.graphics.setColor(color["text"])
 	love.graphics.setFont(font["medium"])
-	love.graphics.print(string.format("%d", self.time), 135*1.6, 522*1.6)
+	love.graphics.print(string.format("%d", self.time), 135*1.6, 512*1.6)
 	-- draw health
-	love.graphics.print(self.health, 350*1.6, 522*1.6)
+	love.graphics.print(self.health, 350*1.6, 512*1.6)
 	-- draw money
-	love.graphics.print(self.money,115*1.6,50*1.6)
+	love.graphics.print(self.money,115*1.6,40*1.6)
 	-- draw scope
-	love.graphics.print(self.scope,350*1.6,50*1.6)
+	love.graphics.print(self.scope,350*1.6,40*1.6)
 	-- draw stage level
     if(self.stage < #self.stages) then
 		love.graphics.print(self.stage,26*1.6,576*1.6)

@@ -15,6 +15,7 @@ function EarthQuake.create(blockhouse)
 	
 	local temp = {}
 	setmetatable(temp, EarthQuake)
+	temp.name = "EarthQuake"
 	temp.target = nil
 	temp.shoot_time = 0
 	temp.blockhouse  = blockhouse
@@ -22,18 +23,33 @@ function EarthQuake.create(blockhouse)
 	return temp
 	
 end
-
+function EarthQuake:reloadGun()
+	self.shoot_time  = love.timer.getMicroTime( )
+end
+function EarthQuake:getReloadTime()
+	local weapon = self.blockhouse.weapon
+    local level = self.blockhouse.level
+	local shoot_time = tower_upgrade[weapon][level].shoot_time
+	
+	if (love.timer.getMicroTime( ) - self.shoot_time  > shoot_time) then
+		return 0
+	else
+		return shoot_time - (love.timer.getMicroTime( ) - self.shoot_time)
+	end
+end
+function EarthQuake:isReadyShoot()
+	local weapon = self.blockhouse.weapon
+    local level = self.blockhouse.level
+	local shoot_time = tower_upgrade[weapon][level].shoot_time
+	return (love.timer.getMicroTime( ) - self.shoot_time  > shoot_time)
+end
 function EarthQuake:update(dt)
 	
 	local weapon = self.blockhouse.weapon
     local level = self.blockhouse.level
 	local range = tower_upgrade[weapon][level].range*7
 	local shoot_time = tower_upgrade[weapon][level].shoot_time
-	
-	if(self.shoot_time >=0) then
-		self.shoot_time = self.shoot_time - 10 * dt
-	end
-	
+ 
 	if (self.target == nil) then --获取一个target
 		for i,e in pairs(state.enemys) do
 
@@ -49,9 +65,9 @@ function EarthQuake:update(dt)
 			return
 		end
 
-  		if(self.shoot_time <=0) then -- 制造地震 
+  		if(self:isReadyShoot() ) then -- 制造地震 
    			love.audio.play(sound["earthquake_fire"])
-   			self.shoot_time  = shoot_time
+   			self:reloadGun()
    			self.blockhouse.earthquake_action_r = 6
    			ballet =  Ballet.create(5, self,self.blockhouse.x ,self.blockhouse.y ,self.target)
    			ballet.live = 0

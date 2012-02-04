@@ -1,4 +1,5 @@
 -- Includes
+require("lua/common.lua")
 require("lua/button.lua")
 require("lua/resources.lua")
 require("lua/states.lua")
@@ -20,28 +21,24 @@ function love.load()
 	math.randomseed(os.time())
 end 
 function love.draw()
-	
 	state:draw()
-
 end
 
 function love.update(dt)
-
 	--delay(33)
 	state:update(dt)
 	love.timer.sleep(1)
-
 end
 
-function delay(fps)
-   if (fps > 50) then
-      fps = fps + (fps / 10) - 5
-   end
-   local toSleep = 2 / fps - love.timer.getDelta()
-   if toSleep > 0 then
-      love.timer.sleep(toSleep * 1000)
-   end
-end
+--function delay(fps)
+--   if (fps > 50) then
+--      fps = fps + (fps / 10) - 5
+--   end
+--   local toSleep = 2 / fps - love.timer.getDelta()
+--   if toSleep > 0 then
+--      love.timer.sleep(toSleep * 1000)
+--   end
+--end
 
 function love.mousepressed(x, y, button)
 

@@ -78,15 +78,14 @@ function Blockhouse:draw()
 	if(i == 1) then
 		cxoffset = -2
 	end
-	love.graphics.draw(graphics["blockhous"][i], self.x , self.y, self.angle,  1, 1, self.width/2 + cxoffset, self.height/2)
-	 
+	love.graphics.draw(graphics["blockhous"][i], self.x , self.y, angleToradians(self.angle),  1.6, 1.6, self.width/2 + cxoffset, self.height/2)
 	
 	if self.ice then
 	    love.graphics.setColor(255,255,255,200)
      	love.graphics.rectangle( "fill", self._x,self._y,34,34)
-     	love.graphics.draw(graphics["bh_border_ice"],self.x,self.y, 0,  1, 1, self.width/2 + cxoffset, self.height/2)
+     	love.graphics.draw(graphics["bh_border_ice"],self.x,self.y, 0,  1.6, 1.6, self.width/2 + cxoffset, self.height/2)
 	else
-		love.graphics.draw(graphics["bh_border"],self.x,self.y, 0,  1, 1, self.width/2 + cxoffset, self.height/2)
+		love.graphics.draw(graphics["bh_border"],self.x,self.y, 0,  1.6, 1.6, self.width/2 + cxoffset, self.height/2)
 	end
 
 	
@@ -114,7 +113,7 @@ function Blockhouse:draw()
 	if self.hover and debug  then
 		love.graphics.setFont(font["tiny"])
  		love.graphics.setColor(color["text"])
-		love.graphics.print(string.format("x=%d,y=%d,w=%d,h=%d,s=%s,m=%s",self._x,self._y,self.width,self.height,s,h),self._x,self._y)
+		love.graphics.print(string.format("angle=%d,gun=%s,gun.shoot_time=%d,x=%d,y=%d,w=%d,h=%d,s=%s,m=%s",self.angle,self.gun.name,self.gun:getReloadTime(),self._x,self._y,self.width,self.height,s,h),self._x,self._y)
 	end
 
 end

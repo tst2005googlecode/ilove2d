@@ -184,16 +184,17 @@ function Creature:draw()
 				
 				love.graphics.setColorMode("modulate")
 				love.graphics.setColor(255, 255, 255, 100)
-    			love.graphics.draw(graphics["creature"][self.number], self.x, self.y, self.angle,  1, 1, self.width/2, self.height/2)
+    			love.graphics.draw(graphics["creature"][self.number], self.x, self.y, angleToradians(self.angle),  1, 1, self.width/2, self.height/2)
 				if(oldcolor >0) then
 					love.graphics.setColor(oldcolor)
 				end
 				love.graphics.setColorMode("replace")
 			else
-				love.graphics.draw(graphics["creature"][self.number], self.x, self.y, self.angle,  1, 1, self.width/2, self.height/2)
+				love.graphics.draw(graphics["creature"][self.number], self.x, self.y, angleToradians(self.angle),  1, 1, self.width/2, self.height/2)
 			end
 			if(self.slowly == true) then
-				love.graphics.draw(graphics["star_circle"], self.x, self.y, self.angle + self.slowly_angle,  1, 1, self.width/2, self.height/2)
+				local zoomState = math.max(self.width,self.height) / math.min(graphics["star_circle"]:getWidth(),graphics["star_circle"]:getHeight())
+				love.graphics.draw(graphics["star_circle"], self.x, self.y, angleToradians(self.angle + self.slowly_angle),  zoomState  , zoomState , graphics["star_circle"]:getWidth()/2, graphics["star_circle"]:getHeight()/2)
 			end
 		-- ÏÔÊ¾µÐÈË×´Ì¬
 		if self.hover and debug  then
@@ -309,8 +310,6 @@ function Creature:MoveOnLand(dt)
 	 end
 end
 function Creature:update(dt)
-	
-	
 	self.hover = false
 	
 	local x = love.mouse.getX()
@@ -318,7 +317,10 @@ function Creature:update(dt)
 	
 	if (self.slowly_time >0) then
 	    self.slowly_time = self.slowly_time - dt
-	    self.slowly_angle = self.slowly_angle + 90 * dt
+	    self.slowly_angle = (self.slowly_angle + 90 * dt)
+		if(debug) then 
+		--print("slowly_angle"..self.slowly_angle % 360)
+		end
 	else
 	    self.slowly = false
 	end

@@ -39,13 +39,13 @@ function Ballet:draw()
 		love.graphics.setColor(color.black)
 		love.graphics.circle( "fill", self.x, self.y, 2,255 ) 
 	elseif self.type == 1 then --rocket
-		love.graphics.draw(graphics.rocket_fire, self.x, self.y, self.angle + 90,  1, 1, graphics.rocket_fire:getWidth()/2, graphics.rocket_fire:getHeight()/2)
+		love.graphics.draw(graphics.rocket_fire, self.x, self.y, angleToradians(self.angle) + 90,  1, 1, graphics.rocket_fire:getWidth()/2, graphics.rocket_fire:getHeight()/2)
 	elseif self.type == 2 then -- cannon
-	    love.graphics.draw(graphics.canon_fire, self.x, self.y, self.angle + 90,  1, 1, graphics.canon_fire:getWidth()/2, graphics.canon_fire:getHeight()/2)
+	    love.graphics.draw(graphics.canon_fire, self.x, self.y, angleToradians(self.angle) + 90,  1, 1, graphics.canon_fire:getWidth()/2, graphics.canon_fire:getHeight()/2)
 	elseif self.type == 3 then -- slowdown
-	    love.graphics.draw(graphics.shock_fire, self.x, self.y, self.angle,  1, 1, graphics.shock_fire:getWidth()/2, graphics.shock_fire:getHeight()/2)
+	    love.graphics.draw(graphics.shock_fire, self.x, self.y, angleToradians(self.angle) + self.x + self.y,  1, 1, graphics.shock_fire:getWidth()/2, graphics.shock_fire:getHeight()/2)
 	elseif self.type == 4 then --aim
-		love.graphics.draw(graphics.sa12_fire, self.x, self.y, self.angle,  1, 1, graphics.sa12_fire:getWidth()/2, graphics.sa12_fire:getHeight()/2)
+		love.graphics.draw(graphics.sa12_fire, self.x, self.y, angleToradians(self.angle),  1, 1, graphics.sa12_fire:getWidth()/2, graphics.sa12_fire:getHeight()/2)
 	elseif self.type == 6 then --radar
 		love.graphics.setColor(182,204,87)
 		love.graphics.setLine( 1 )
@@ -59,8 +59,6 @@ end
 function Ballet:update(dt)
 	
 	self.time = self.time + dt
-
-
 	--×Óµ¯ÒÆ¶¯
 	--pr(b,"ballet")
 	if self.type == 1 then -- rocket
@@ -77,18 +75,19 @@ end
 function Ballet:radarMove(dt)
     local weapon = self.host.blockhouse.weapon
 	local level = self.host.blockhouse.level
-	local speed = dt * tower_upgrade[weapon][level].bullet_speed * 10
+	--local speed = dt * tower_upgrade[weapon][level].bullet_movePixOnsec * 10
 	local range = tower_upgrade[weapon][level].range
 	self.range_off = self.range_off + range * dt / 2
 	if(self.range_off >= range) then
 	    self = nil
+		table.remove(state.ballets,self)
 	end
 end
 function Ballet:rocketMove(dt)
 
 	local weapon = self.host.blockhouse.weapon
 	local level = self.host.blockhouse.level
-	local speed = dt * tower_upgrade[weapon][level].bullet_speed * 10
+	local speed = dt * tower_upgrade[weapon][level].bullet_movePixOnsec
 	local range = tower_upgrade[weapon][level].range
 	local dx = self.targetX - self.x
 	local dy = self.targetY - self.y
@@ -125,7 +124,7 @@ function Ballet:gunTraceMove(dt)
 
 	local weapon = self.host.blockhouse.weapon
 	local level = self.host.blockhouse.level
-    local speed = dt * tower_upgrade[weapon][level].bullet_speed * 10
+    local speed = dt * tower_upgrade[weapon][level].bullet_movePixOnsec
     local dx = self.targetX - self.x
 	local dy = self.targetY - self.y
 	local angle = (270 + math.atan2(dy, dx)*180/math.pi)%360
@@ -145,7 +144,7 @@ end
 function Ballet:aimTraceMove(dt)
 	local weapon = self.host.blockhouse.weapon
 	local level = self.host.blockhouse.level
-	local speed = dt * tower_upgrade[weapon][level].bullet_speed * 10
+	local speed = dt * tower_upgrade[weapon][level].bullet_movePixOnsec
 	
 	local dx = self.x - self.target.x
 	local dy = self.y - self.target.y

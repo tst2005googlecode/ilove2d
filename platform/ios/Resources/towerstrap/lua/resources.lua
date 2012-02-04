@@ -106,93 +106,59 @@ tower_upgrade =
     { --snipper =
       {
 
-        { buy_cost=10,sell_cost=8,damage=8,range=6,update_time=10,shoot_time=3,bullet_speed=6,on_shoot_bullet_count=1},
--- ######## Line too long (123 chars) ######## :
-        { buy_cost=20,sell_cost=24,damage=20,range=8,update_time=20,shoot_time=3,bullet_speed=6,on_shoot_bullet_count=1 },
--- ######## Line too long (126 chars) ######## :
-        { buy_cost=40,sell_cost=48, damage =50,range=10,update_time=40,shoot_time=3,bullet_speed=6,on_shoot_bullet_count=1 },
--- ######## Line too long (125 chars) ######## :
-        { buy_cost=70,sell_cost=96,damage=150,range=12,update_time=80,shoot_time=3,bullet_speed=6,on_shoot_bullet_count=1 },
--- ######## Line too long (127 chars) ######## :
-        { buy_cost=170,sell_cost=240,damage=300,range=16,update_time=160,shoot_time=3,bullet_speed=7,on_shoot_bullet_count=1 }
+        { buy_cost=10,sell_cost=8,damage=8,range=6,upgrade_time=1,shoot_time=3,bullet_movePixOnsec=60*1.6,on_shoot_bullet_count=1},
+        { buy_cost=20,sell_cost=24,damage=20,range=8,upgrade_time=2,shoot_time=3,bullet_movePixOnsec=60*1.6,on_shoot_bullet_count=1 },
+        { buy_cost=40,sell_cost=48, damage =50,range=10,upgrade_time=4,shoot_time=3,bullet_movePixOnsec=60*1.6,on_shoot_bullet_count=1 },
+        { buy_cost=70,sell_cost=96,damage=150,range=12,upgrade_time=8,shoot_time=3,bullet_movePixOnsec=60*1.6,on_shoot_bullet_count=1 },
+        { buy_cost=170,sell_cost=240,damage=300,range=16,upgrade_time=16,shoot_time=3,bullet_movePixOnsec=70*1.6,on_shoot_bullet_count=1 }
       },
        --rocket =
       {
--- ######## Line too long (124 chars) ######## :
-        { buy_cost=20,sell_cost=14,damage=10,range=10,update_time=10,shoot_time=7,bullet_speed=10,on_shoot_bullet_count=1},
--- ######## Line too long (124 chars) ######## :
-        { buy_cost=40,sell_cost=50,damage=30,range=12,update_time=20,shoot_time=7,bullet_speed=10,on_shoot_bullet_count=1},
--- ######## Line too long (125 chars) ######## :
-        { buy_cost=80,sell_cost=100,damage=80,range=14,update_time=40,shoot_time=7,bullet_speed=10,on_shoot_bullet_count=1},
--- ######## Line too long (127 chars) ######## :
-        { buy_cost=160,sell_cost=220,damage=200,range=16,update_time=80,shoot_time=7,bullet_speed=10,on_shoot_bullet_count=1},
--- ######## Line too long (127 chars) ######## :
-        { buy_cost=320,sell_cost=400,damage=400,range=18,update_time=160,shoot_time=7,bullet_speed=10,on_shoot_bullet_count=1}
+        { buy_cost=20,sell_cost=14,damage=10,range=10,upgrade_time=1,shoot_time=7,bullet_movePixOnsec=100*1.6,on_shoot_bullet_count=1},
+        { buy_cost=40,sell_cost=50,damage=30,range=12,upgrade_time=2,shoot_time=7,bullet_movePixOnsec=100*1.6,on_shoot_bullet_count=1},
+        { buy_cost=80,sell_cost=100,damage=80,range=14,upgrade_time=4,shoot_time=7,bullet_movePixOnsec=100*1.6,on_shoot_bullet_count=1},
+        { buy_cost=160,sell_cost=220,damage=200,range=16,upgrade_time=8,shoot_time=7,bullet_movePixOnsec=100*1.6,on_shoot_bullet_count=1},
+        { buy_cost=320,sell_cost=400,damage=400,range=18,upgrade_time=16,shoot_time=7,bullet_movePixOnsec=100*1.6,on_shoot_bullet_count=1}
       },
        --cannon =
       {
--- ######## Line too long (122 chars) ######## :
-        { buy_cost=100,sell_cost=80,damage=2,range=8,update_time=10,shoot_time=7,bullet_speed=8,on_shoot_bullet_count=1},
--- ######## Line too long (123 chars) ######## :
-        { buy_cost=150,sell_cost=150,damage=4,range=8,update_time=20,shoot_time=7,bullet_speed=8,on_shoot_bullet_count=1},
--- ######## Line too long (124 chars) ######## :
-        { buy_cost=200,sell_cost=300,damage=10,range=8,update_time=40,shoot_time=7,bullet_speed=8,on_shoot_bullet_count=1},
--- ######## Line too long (124 chars) ######## :
-        { buy_cost=300,sell_cost=400,damage=25,range=8,update_time=80,shoot_time=7,bullet_speed=8,on_shoot_bullet_count=1},
--- ######## Line too long (126 chars) ######## :
-        { buy_cost=400,sell_cost=600,damage=50,range=10,update_time=160,shoot_time=7,bullet_speed=12,on_shoot_bullet_count=1}
+        { buy_cost=100,sell_cost=80,damage=2,range=8,upgrade_time=1,shoot_time=7,bullet_movePixOnsec=80*1.6,on_shoot_bullet_count=1},
+        { buy_cost=150,sell_cost=150,damage=4,range=8,upgrade_time=2,shoot_time=7,bullet_movePixOnsec=80*1.6,on_shoot_bullet_count=1},
+        { buy_cost=200,sell_cost=300,damage=10,range=8,upgrade_time=4,shoot_time=7,bullet_movePixOnsec=80*1.6,on_shoot_bullet_count=1},
+        { buy_cost=300,sell_cost=400,damage=25,range=8,upgrade_time=8,shoot_time=7,bullet_movePixOnsec=80*1.6,on_shoot_bullet_count=1},
+        { buy_cost=400,sell_cost=600,damage=50,range=10,upgrade_time=16,shoot_time=7,bullet_movePixOnsec=120*1.6,on_shoot_bullet_count=1}
       },
 
        --shock =
       {
--- ######## Line too long (123 chars) ######## :
-        { buy_cost=50,sell_cost=40,damage=10,range=6,update_time=10,shoot_time=6,bullet_speed=10,on_shoot_bullet_count=1},
--- ######## Line too long (125 chars) ######## :
-        { buy_cost=100,sell_cost=120,damage=10,range=8,update_time=20,shoot_time=5,bullet_speed=10,on_shoot_bullet_count=1},
--- ######## Line too long (127 chars) ######## :
-        { buy_cost=150,sell_cost=200,damage=20,range=10,update_time=40,shoot_time=4,bullet_speed=10,on_shoot_bullet_count=1},
--- ######## Line too long (127 chars) ######## :
-        { buy_cost=150,sell_cost=300,damage=40,range=12,update_time=80,shoot_time=3,bullet_speed=10,on_shoot_bullet_count=1},
--- ######## Line too long (127 chars) ######## :
-        { buy_cost=150,sell_cost=400,damage=80,range=14,update_time=160,shoot_time=1,bullet_speed=12,on_shoot_bullet_count=1}
+        { buy_cost=50,sell_cost=40,damage=10,range=6,upgrade_time=1,shoot_time=6,bullet_movePixOnsec=100*1.6,on_shoot_bullet_count=1},
+        { buy_cost=100,sell_cost=120,damage=10,range=8,upgrade_time=2,shoot_time=5,bullet_movePixOnsec=100*1.6,on_shoot_bullet_count=1},
+        { buy_cost=150,sell_cost=200,damage=20,range=10,upgrade_time=4,shoot_time=4,bullet_movePixOnsec=100*1.6,on_shoot_bullet_count=1},
+        { buy_cost=150,sell_cost=300,damage=40,range=12,upgrade_time=8,shoot_time=3,bullet_movePixOnsec=100*1.6,on_shoot_bullet_count=1},
+        { buy_cost=150,sell_cost=400,damage=80,range=14,upgrade_time=16,shoot_time=1,bullet_movePixOnsec=120*1.6,on_shoot_bullet_count=1}
       },
        --air =
       {
--- ######## Line too long (123 chars) ######## :
-        { buy_cost=50,sell_cost=40,damage=20,range=10,update_time=10,shoot_time=2,bullet_speed=12,on_shoot_bullet_count=5},
--- ######## Line too long (125 chars) ######## :
-        { buy_cost=100,sell_cost=120,damage=60,range=10,update_time=20,shoot_time=2,bullet_speed=12,on_shoot_bullet_count=7},
--- ######## Line too long (126 chars) ######## :
-        { buy_cost=150,sell_cost=200,damage=180,range=10,update_time=40,shoot_time=2,bullet_speed=12,on_shoot_bullet_count=10},
--- ######## Line too long (126 chars) ######## :
-        { buy_cost=200,sell_cost=350,damage=360,range=10,update_time=80,shoot_time=2,bullet_speed=12,on_shoot_bullet_count=12},
--- ######## Line too long (126 chars) ######## :
-        { buy_cost=400,sell_cost=800,damage=700,range=12,update_time=160,shoot_time=2,bullet_speed=12,on_shoot_bullet_count=15}
+        { buy_cost=50,sell_cost=40,damage=20,range=10,upgrade_time=1,shoot_time=2,bullet_movePixOnsec=120*1.6,on_shoot_bullet_count=5},
+        { buy_cost=100,sell_cost=120,damage=60,range=10,upgrade_time=2,shoot_time=2,bullet_movePixOnsec=120*1.6,on_shoot_bullet_count=7},
+        { buy_cost=150,sell_cost=200,damage=180,range=10,upgrade_time=4,shoot_time=2,bullet_movePixOnsec=120*1.6,on_shoot_bullet_count=10},
+        { buy_cost=200,sell_cost=350,damage=360,range=10,upgrade_time=8,shoot_time=2,bullet_movePixOnsec=120*1.6,on_shoot_bullet_count=12},
+        { buy_cost=400,sell_cost=800,damage=700,range=12,upgrade_time=16,shoot_time=2,bullet_movePixOnsec=120*1.6,on_shoot_bullet_count=15}
       },
        --earthquake =
       {
--- ######## Line too long (123 chars) ######## :
-        { buy_cost=100,sell_cost=80,damage=70,range=6,update_time=10,shoot_time=7,bullet_speed=1,on_shoot_bullet_count=1},
--- ######## Line too long (125 chars) ######## :
-        { buy_cost=120,sell_cost=100,damage=140,range=6,update_time=20,shoot_time=7,bullet_speed=3,on_shoot_bullet_count=1},
--- ######## Line too long (125 chars) ######## :
-        { buy_cost=240,sell_cost=130,damage=280,range=6,update_time=40,shoot_time=7,bullet_speed=3,on_shoot_bullet_count=1},
--- ######## Line too long (125 chars) ######## :
-        { buy_cost=300,sell_cost=150,damage=560,range=6,update_time=80,shoot_time=7,bullet_speed=6,on_shoot_bullet_count=1},
--- ######## Line too long (126 chars) ######## :
-        { buy_cost=400,sell_cost=150,damage=1120,range=6,update_time=160,shoot_time=7,bullet_speed=6,on_shoot_bullet_count=1}
+        { buy_cost=100,sell_cost=80,damage=70,range=6,upgrade_time=1,shoot_time=7,bullet_movePixOnsec=10*1.6,on_shoot_bullet_count=1},
+        { buy_cost=120,sell_cost=100,damage=140,range=6,upgrade_time=2,shoot_time=7,bullet_movePixOnsec=30*1.6,on_shoot_bullet_count=1},
+        { buy_cost=240,sell_cost=130,damage=280,range=6,upgrade_time=4,shoot_time=7,bullet_movePixOnsec=30*1.6,on_shoot_bullet_count=1},
+        { buy_cost=300,sell_cost=150,damage=560,range=6,upgrade_time=8,shoot_time=7,bullet_movePixOnsec=60*1.6,on_shoot_bullet_count=1},
+        { buy_cost=400,sell_cost=150,damage=1120,range=6,upgrade_time=16,shoot_time=7,bullet_movePixOnsec=60*1.6,on_shoot_bullet_count=1}
       },
        --radar =
       {
--- ######## Line too long (121 chars) ######## :
-        { buy_cost=50,sell_cost=40,damage=0,range=6,update_time=10,shoot_time=2,bullet_speed=0,on_shoot_bullet_count=0},
--- ######## Line too long (121 chars) ######## :
-        { buy_cost=60,sell_cost=80,damage=0,range=8,update_time=20,shoot_time=2,bullet_speed=0,on_shoot_bullet_count=0},
--- ######## Line too long (125 chars) ######## :
-        { buy_cost=70,sell_cost=160,damage=0, range =10,update_time=40,shoot_time=2,bullet_speed=0,on_shoot_bullet_count=0},
--- ######## Line too long (123 chars) ######## :
-        { buy_cost=80,sell_cost=260,damage=0,range=12,update_time=80,shoot_time=2,bullet_speed=0,on_shoot_bullet_count=0},
--- ######## Line too long (124 chars) ######## :
-        { buy_cost=100,sell_cost=260,damage=0,range=14,update_time=160,shoot_time=2,bullet_speed=0,on_shoot_bullet_count=0}
+        { buy_cost=50,sell_cost=40,damage=0,range=6,upgrade_time=1,shoot_time=2,bullet_movePixOnsec=0,on_shoot_bullet_count=0},
+        { buy_cost=60,sell_cost=80,damage=0,range=8,upgrade_time=2,shoot_time=2,bullet_movePixOnsec=0,on_shoot_bullet_count=0},
+        { buy_cost=70,sell_cost=160,damage=0, range =10,upgrade_time=4,shoot_time=2,bullet_movePixOnsec=0,on_shoot_bullet_count=0},
+        { buy_cost=80,sell_cost=260,damage=0,range=12,upgrade_time=8,shoot_time=2,bullet_movePixOnsec=0,on_shoot_bullet_count=0},
+        { buy_cost=100,sell_cost=260,damage=0,range=14,upgrade_time=16,shoot_time=2,bullet_movePixOnsec=0,on_shoot_bullet_count=0}
       }
     }

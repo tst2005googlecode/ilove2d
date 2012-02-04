@@ -15,6 +15,7 @@ function Radar.create(blockhouse)
 	
  	local temp = {}
 	setmetatable(temp, Radar)
+	temp.name = "Radar"
 	temp.target = nil
 	temp.shoot_time = 0
 	temp.blockhouse  = blockhouse
@@ -23,7 +24,26 @@ function Radar.create(blockhouse)
 	
 end
 
-
+function Radar:reloadGun()
+	self.shoot_time  = love.timer.getMicroTime( )
+end
+function Radar:getReloadTime()
+	local weapon = self.blockhouse.weapon
+    local level = self.blockhouse.level
+	local shoot_time = tower_upgrade[weapon][level].shoot_time
+	
+	if (love.timer.getMicroTime( ) - self.shoot_time  > shoot_time) then
+		return 0
+	else
+		return shoot_time - (love.timer.getMicroTime( ) - self.shoot_time)
+	end
+end
+function Radar:isReadyShoot()
+	local weapon = self.blockhouse.weapon
+    local level = self.blockhouse.level
+	local shoot_time = tower_upgrade[weapon][level].shoot_time
+	return (love.timer.getMicroTime( ) - self.shoot_time  > shoot_time)
+end
 function Radar:update(dt)
 
     local weapon = self.blockhouse.weapon
@@ -31,7 +51,7 @@ function Radar:update(dt)
 	local range = tower_upgrade[weapon][level].range*7
 	local shoot_time = tower_upgrade[weapon][level].shoot_time
 	if(self.shoot_time >0) then
-		self.shoot_time = self.shoot_time - love.timer.getFPS() / shoot_time 
+		self.shoot_time = self.shoot_time - dt 
 	end
 
 	local foundenemyscount = 0

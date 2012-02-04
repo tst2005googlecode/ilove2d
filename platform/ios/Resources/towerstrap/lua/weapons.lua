@@ -10,7 +10,7 @@
 
 Weapons = {}
 Weapons.__index = Weapons
-
+WEAPON_WIDTH = 40*1.6;
 function Weapons.create(x,y)
 	
 	local temp = {}
@@ -18,13 +18,13 @@ function Weapons.create(x,y)
 	temp.hover = false -- whether the mouse is hovering over the button
 	temp.click = false -- whether the mouse has been clicked on the button
 	temp.name = "" -- the text in the button
-	temp.width = 40*7
-	temp.height = 40
+	temp.width = WEAPON_WIDTH*7
+	temp.height = WEAPON_WIDTH
 	temp.selected = -1
 	temp.x = x
 	temp.y = y
 	temp.tipboard_x = x
-	temp.tipboard_y = y - 45
+	temp.tipboard_y = y - (WEAPON_WIDTH+5)
 	return temp
 	
 end
@@ -37,35 +37,22 @@ function Weapons:draw()
 	love.graphics.setLine(1)
 	love.graphics.rectangle( "fill", self.tipboard_x, self.tipboard_y , self.width, self.height) 
 	local hoverItem = -1
-	if not self.hover then
- 		if(debug) then
-			love.graphics.print("weapons leave", 100*1.6, 120*1.6) 
-		end
-	else
-		if(debug) then
-		love.graphics.setColor(color["menu_bg"])
-		love.graphics.print("weapons hover", 100*1.6, 120*1.6) 
-		
-		end
-		local x = love.mouse.getX()
+	if  self.hover then
+ 		local x = love.mouse.getX()
 		local y = love.mouse.getY()
 		hoverItem = self:getItemByPostion(x,y)
 		self:DrawObjTips(hoverItem)
 	end
 	--draw weapons images
+	love.graphics.draw(graphics["weapons"], self.x , self.y, 0, 1.6,1.6, 0, 0 )
 	
-	love.graphics.draw(graphics["weapons"], self.x , self.y)
-	if(debug) then
-		love.graphics.setColor(color["menu_bg"])
-		love.graphics.print("weapons selected: " .. self.selected, 100*1.6, 100*1.6) 
-	end
-	if self.selected then
+	if self.selected > 0 then
 		if hoverItem < 0 then
 			self:DrawObjTips(self.selected)
 		end
 		love.graphics.setColor(color["obj_selected"])
 		love.graphics.setLine(2)
-		love.graphics.rectangle( "line", self.x  + (self.selected - 1) * 40, self.y , 40, 40)
+		love.graphics.rectangle( "line", self.x  + (self.selected - 1) * WEAPON_WIDTH, self.y , WEAPON_WIDTH, WEAPON_WIDTH)
 	end	
 end
 function Weapons:DrawObjTips(index)
@@ -105,7 +92,7 @@ function Weapons:update(dt)
 	
 end
 function Weapons:getItemByPostion(x,y)
-	return math.floor(( x - self.x)/ 40) + 1
+	return math.floor(( x - self.x)/ WEAPON_WIDTH) + 1
 end
 function Weapons:mousepressed(x, y, button)
 	
