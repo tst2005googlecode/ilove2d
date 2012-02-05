@@ -1,5 +1,6 @@
 -- Includes
 require("lua/common.lua")
+require("lua/ammo.lua")
 require("lua/button.lua")
 require("lua/resources.lua")
 require("lua/states.lua")

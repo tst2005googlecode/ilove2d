@@ -209,7 +209,7 @@ function Game:draw()
 	love.graphics.setFont(font["tiny"])
 	love.graphics.setColor(color["text"])
 	--if(time_UpdateCapiton <=0) then
-		love.graphics.print("Towers Trap - [FPS: " .. love.timer.getFPS() .."]",0, 0)
+		love.graphics.print("Towers TrapËþ·À - [FPS: " .. love.timer.getFPS() .."]",0, 0)
 	--end
 	end	
 		

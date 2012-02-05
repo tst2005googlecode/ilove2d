@@ -170,17 +170,17 @@ function Blockhouse:update(dt)
 	local y = love.mouse.getY()
 	
 	if x > self._x
-		and x < self._x + self.width
+		and x < self._x + self.width*1.6
 		and y > self._y
-		and y < self._y + self.height then
+		and y < self._y + self.height*1.6 then
 		self.hover = true
 	elseif x > self._x
-	    and x < self._x + self.width
+	    and x < self._x + self.width*1.6
 	    and y > self._y - GRID_SIZE
 	    and y < self._y - 2 then
 	    self.hover_up = true
 	elseif x > self._x
-	    and x < self._x + self.width
+	    and x < self._x + self.width*1.6
 	    and y > self.y + GRID_SIZE
 	    and y < self.y + GRID_SIZE * 2 then
 	    self.hover_down = true

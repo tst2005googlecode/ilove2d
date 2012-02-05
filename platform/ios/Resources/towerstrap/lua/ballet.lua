@@ -74,7 +74,6 @@ end
 function Ballet:radarMove(dt)
     local weapon = self.host.blockhouse.weapon
 	local level = self.host.blockhouse.level
-	--local speed = dt * tower_upgrade[weapon][level].bullet_movePixOnsec * 10
 	local range = tower_upgrade[weapon][level].range
 	self.range_off = self.range_off + range * dt / 2
 	if(self.range_off >= range) then
