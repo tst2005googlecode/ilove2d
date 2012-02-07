@@ -89,9 +89,13 @@ namespace cocoa
 		return (currTime - time_init);
 	}
 
-	float Timer::getMicroTime() const
+	double Timer::getMicroTime() const
 	{
-		return [timer timeIntervalSince1970]*1000000.0f;
+        NSString *nowTimestamp = [NSString stringWithFormat:@"%f", 
+                                  [[NSDate date] timeIntervalSince1970]];
+        
+        double mt = [[NSDate date] timeIntervalSince1970];
+		return mt;//*1000000.0f;
 	}
 
 } // cocoa

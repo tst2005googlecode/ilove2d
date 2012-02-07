@@ -70,10 +70,13 @@ namespace opengles
 		int first = (int)text[0];
 		int s = -bearingX[first];
 		for (unsigned int i = 0; i < text.size(); i++) {
+            
 			int g = (int)text[i];
-			if (!glyphs[g]) g = 32; // space
+             
+            if ((g > MAX_CHARS )|| (!glyphs[g])) g = 32; // space
 			glyphs[g]->draw(bearingX[g] + s, -bearingY[g]+height, 0, 1, 1, 0, 0);
 			s += spacing[g] * mSpacing;
+             
 		}
 		glPopMatrix();
 	}

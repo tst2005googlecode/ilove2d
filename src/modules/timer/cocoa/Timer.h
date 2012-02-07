@@ -117,9 +117,9 @@ namespace cocoa
 		/**
 		 * Gets the amount of time passed since an unspecified time. The time is accurate
 		 * to the microsecond, and is limited to 24 hours.
-		 * @return The time (in seconds)
+		 * @return The time (in micro seconds)
 		 **/
-		float getMicroTime() const;
+		double getMicroTime() const;
 
 	}; // Timer
 
