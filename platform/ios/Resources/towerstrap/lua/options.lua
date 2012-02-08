@@ -8,11 +8,8 @@ function Options.create()
 	setmetatable(temp, Options)
 	temp.button = {	on = Button.create("On", 425/2*1.6, 300*1.6),
 					off = Button.create("Off", 550/2*1.6, 300*1.6),
-					--five = Button.create(" 5 ", 375/2, 375),
-					--six = Button.create(" 6 ", 425/2, 375),
-					--seven = Button.create(" 7 ", 475/2, 375),
-					--eight = Button.create(" 8 ", 525/2, 375),
-					--nine = Button.create(" 9 ", 575, 375),
+					debug_on = Button.create("On", 425/2*1.6, 375),
+					debug_off = Button.create("Off",550/2*1.6, 375),
 					back = Button.create("Back", 400/2*1.6, 550*1.6) }
 	return temp
 end
@@ -32,7 +29,7 @@ function Options:draw()
 	love.graphics.setColor(color["text"])
 	love.graphics.setFont(font["large"])
 	love.graphics.print("Audio:", 150*1.6, 300*1.6)
-	--love.graphics.draw("Level:", 60, 375)
+	love.graphics.print("Debug:", 150*1.6, 375)
 	
 	love.graphics.setColor(color["main"])
 	love.graphics.setLine(4, "rough")
@@ -43,8 +40,12 @@ function Options:draw()
 		love.graphics.line(525/2*1.6,305*1.6,575/2*1.6,305*1.6)
 	end
 	
-	--love.graphics.line((360+((size-5)*50))/2,380,(390+((size-5)*50))/2,380)
-	
+	if debug then
+	        love.graphics.line(400/2*1.6,375,450/2*1.6,375)
+        else
+                love.graphics.line(525/2*1.6,375,575/2*1.6,375)
+        end
+
 	for n,b in pairs(self.button) do
 		b:draw()
 	end
@@ -69,16 +70,10 @@ function Options:mousepressed(x,y,button)
 			elseif n == "off" then
 				audio = false
 				love.audio.pause()
-			elseif n == "five" then
-				size = 5
-			elseif n == "six" then
-				size = 6
-			elseif n == "seven" then
-				size = 7
-			elseif n == "eight" then
-				size = 8
-			elseif n == "nine" then
-				size = 9
+			elseif n == "debug_on" then
+				debug = true
+			elseif n == "debug_off" then
+				debug = false
 			elseif n == "back" then
 				state = Menu.create()
 			end

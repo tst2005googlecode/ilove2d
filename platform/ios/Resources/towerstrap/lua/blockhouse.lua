@@ -58,8 +58,8 @@ function Blockhouse.create(weapon,mapgridpointer)
 
 	temp.width = graphics["blockhous"][weapon]:getWidth()
 	temp.height = graphics["blockhous"][weapon]:getHeight()
-	temp._x = battlearea.left + (mapgridpointer.x) * GRID_SIZE
-	temp._y = battlearea.top + (mapgridpointer.y) * GRID_SIZE
+	temp.centX = battlearea.left + (mapgridpointer.x) * GRID_SIZE
+	temp.centY = battlearea.top + (mapgridpointer.y) * GRID_SIZE
 	temp.x = battlearea.left + (mapgridpointer.x + 1) * GRID_SIZE
 	temp.y = battlearea.top + (mapgridpointer.y+1) * GRID_SIZE
 	temp.gridpointer = {}
@@ -82,10 +82,10 @@ function Blockhouse:draw()
 	
 	if self.ice then
 	    love.graphics.setColor(255,255,255,200)
-     	love.graphics.rectangle( "fill", self._x,self._y,34,34)
-     	love.graphics.draw(graphics["bh_border_ice"],self.x,self.y, 0,  1.6, 1.6, self.width/2 + cxoffset, self.height/2)
+     	love.graphics.rectangle( "fill", self.centX,self.centY,34,34)
+     	love.graphics.draw(graphics["bh_border_ice"],self.x,self.y, 0,  1.6, 1.6, graphics["bh_border_ice"]:getWidth()/2 , graphics["bh_border_ice"]:getHeight()/2)
 	else
-		love.graphics.draw(graphics["bh_border"],self.x,self.y, 0,  1.6, 1.6, self.width/2 + cxoffset, self.height/2)
+		love.graphics.draw(graphics["bh_border"],self.x,self.y, 0,  1.6, 1.6, graphics["bh_border"]:getWidth()/2, graphics["bh_border"]:getHeight()/2)
 	end
 
 	
@@ -113,7 +113,7 @@ function Blockhouse:draw()
 	if self.hover and debug  then
 		love.graphics.setFont(font["tiny"])
  		love.graphics.setColor(color["text"])
-		love.graphics.print(string.format("angle=%d,gun=%s,gun.shoot_time=%d,x=%d,y=%d,w=%d,h=%d,s=%s,m=%s",self.angle,self.gun.name,self.gun:getReloadTime(),self._x,self._y,self.width,self.height,s,h),self._x,self._y)
+		love.graphics.print(string.format("angle=%d,gun=%s,gun.shoot_time=%d,x=%d,y=%d,w=%d,h=%d,s=%s,m=%s",self.angle,self.gun.name,self.gun:getReloadTime(),self.centX,self.centY,self.width,self.height,s,h),self.centX,self.centY)
 	end
 
 end
@@ -133,20 +133,20 @@ function Blockhouse:drawselector()
 		local textheight = font["tiny"]:getHeight()
 
 		if(self.level < 5) then
-			love.graphics.rectangle( "fill", self._x, self._y - GRID_SIZE, GRID_SIZE*2, GRID_SIZE)
+			love.graphics.rectangle( "fill", self.centX, self.centY - GRID_SIZE, GRID_SIZE*2, GRID_SIZE)
 			love.graphics.setColor(255,155,0)
-			love.graphics.rectangle( "line", self._x + 1, self._y + 1 - GRID_SIZE, GRID_SIZE*2 - 2, GRID_SIZE - 2)
+			love.graphics.rectangle( "line", self.centX + 1, self.centY + 1 - GRID_SIZE, GRID_SIZE*2 - 2, GRID_SIZE - 2)
 
 			local buy_cost = tower_upgrade[self.weapon][self.level +1 ].buy_cost
 			love.graphics.setColor(color["yellow"])
 			love.graphics.setFont(font["tiny"])
 			local textwidth = font["tiny"]:getWidth(buy_cost)
-			love.graphics.print( buy_cost, self.x - textwidth /2, self._y - textheight / 2 )
+			love.graphics.print( buy_cost, self.x - textwidth /2, self.centY - textheight / 2 )
 		end
 
 		local sell_cost = tower_upgrade[self.weapon][self.level].sell_cost
 		love.graphics.setColor(255,85,32)
-		love.graphics.rectangle( "fill", self._x, self.y + GRID_SIZE, GRID_SIZE*2, GRID_SIZE)
+		love.graphics.rectangle( "fill", self.centX, self.y + GRID_SIZE, GRID_SIZE*2, GRID_SIZE)
 		love.graphics.setColor(color["yellow"])
 		love.graphics.setFont(font["tiny"])
 		local textwidth = font["tiny"]:getWidth(sell_cost)
@@ -169,18 +169,18 @@ function Blockhouse:update(dt)
 	local x = love.mouse.getX()
 	local y = love.mouse.getY()
 	
-	if x > self._x
-		and x < self._x + self.width*1.6
-		and y > self._y
-		and y < self._y + self.height*1.6 then
+	if x > self.centX
+		and x < self.centX + self.width*1.6
+		and y > self.centY
+		and y < self.centY + self.height*1.6 then
 		self.hover = true
-	elseif x > self._x
-	    and x < self._x + self.width*1.6
-	    and y > self._y - GRID_SIZE
-	    and y < self._y - 2 then
+	elseif x > self.centX
+	    and x < self.centX + self.width*1.6
+	    and y > self.centY - GRID_SIZE
+	    and y < self.centY - 2 then
 	    self.hover_up = true
-	elseif x > self._x
-	    and x < self._x + self.width*1.6
+	elseif x > self.centX
+	    and x < self.centX + self.width*1.6
 	    and y > self.y + GRID_SIZE
 	    and y < self.y + GRID_SIZE * 2 then
 	    self.hover_down = true

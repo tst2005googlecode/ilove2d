@@ -46,7 +46,7 @@ function Creature.create(game,number,gx,gy,live)
 
 	temp.map = {}
 	temp.pass = false -- 是否到达终点 
-	temp.startIndex = temp.gx + temp.gy * grid_col
+	temp.startIndex = temp.gx + temp.gy * COL_NUMS
 	temp.live = live
 	temp.off_angle = 0
 	temp.firstx = 0  --第一步x坐标
@@ -55,13 +55,13 @@ function Creature.create(game,number,gx,gy,live)
 	if(gx >=0 and gx <=3) then -- from left
 		temp.angle = 0
 		temp.from = 1 -- left
-		temp.endIndex = (gy+1) * grid_col - 1 -- 475
+		temp.endIndex = (gy+1) * COL_NUMS - 1 -- 475
 		temp.firstx = 66
 
 	else  -- from top
 		temp.angle = 90
 		temp.from = 0 -- top
-		temp.endIndex = grid_col * (grid_row-1) + gx -- 882
+		temp.endIndex = COL_NUMS * (ROW_NUMS-1) + gx -- 882
 		temp.firsty = 66
 	end
 	
@@ -69,9 +69,9 @@ function Creature.create(game,number,gx,gy,live)
 
 	if(temp.from == 0) then --top
 		temp.endX = temp.x
-    	temp.endY = battlearea.top + (temp.endIndex % grid_col )*GRID_SIZE
+    	temp.endY = battlearea.top + (temp.endIndex % COL_NUMS )*GRID_SIZE
 	else -- left
-	    temp.endX = battlearea.left + math.floor(temp.endIndex / grid_col) * GRID_SIZE
+	    temp.endX = battlearea.left + math.floor(temp.endIndex / COL_NUMS) * GRID_SIZE
     	temp.endY = temp.y
 	end
 
@@ -245,7 +245,7 @@ function Creature:ReCaleGridXY()
 	local gy = math.floor(self.y / GRID_SIZE)
 	self.gx = gx
 	self.gy = gy
-	self.startIndex = gx + gy * grid_col
+	self.startIndex = gx + gy * COL_NUMS
 end
 
 function Creature:MoveOnLand(dt)
@@ -255,7 +255,7 @@ function Creature:MoveOnLand(dt)
 	    speed = speed * 0.5
 	end
 	if(#self.map >0) then
-		local currentIndex = self.gx + self.gy * grid_col
+		local currentIndex = self.gx + self.gy * COL_NUMS
 		--print(string.format("move out from %d to %d,#self.map = %d",currentIndex,self.endIndex,#self.map))
 		--pr(self.map,"map")
 		local nextX,nextY
@@ -266,7 +266,7 @@ function Creature:MoveOnLand(dt)
 		if (math.abs(nextX - self.x) + math.abs(nextY - self.y)) < 4 then
 			table.remove(self.map,1)
 			self:ReCaleGridXY()
-			self.startIndex = self.gx + self.gy * grid_col
+			self.startIndex = self.gx + self.gy * COL_NUMS
 		end
 
 		--print(string.format("self.x=%d,self.y=%d,nextX=%d,nextY=%d",self.x,self.y,nextX,nextY))
@@ -366,8 +366,11 @@ function Creature:update(dt)
 	
 	-- 是否到达目标
 	
+	local gx = math.floor(self.x / GRID_SIZE)
+        local gy = math.floor(self.y / GRID_SIZE)
+
 	if  ((self.number == 6) and
-	     ((self.from == 0 and self.y > 546) or (self.from == 1 and self.x > 480))) or
+	     ((self.from == 0 and gy >29) or (self.from == 1 and gx > 25))) or
 		self.startIndex == self.endIndex then --到达目标
 		print("reach") 
 		self.pass = true

@@ -5,8 +5,8 @@
 Game = {}
 Game.__index = Game
 
-grid_col = 28
-grid_row = 32
+COL_NUMS = 28
+ROW_NUMS = 32
 GRID_SIZE = 27.42857142857143
 battlearea = {top = 0,left = 0}
 
@@ -66,7 +66,7 @@ function Game.create()
 	
 
 	
-	for i = 0, grid_col * grid_row - 1 do
+	for i = 0, COL_NUMS * ROW_NUMS - 1 do
 		if temp.maps[i+1] <= 0 then
 		   	Map[i].iCanPass = true
 	   	else
@@ -223,8 +223,10 @@ function Game:draw()
 		love.graphics.print("Towers Trap - [FPS: " .. love.timer.getFPS() .."]",debugareax, debugareay)
 		
 		love.graphics.print("mousepoint(x: " .. self.mousepointer.x .. ",y:" .. self.mousepointer.y,debugareax, debugareay+20)
-		love.graphics.print(string.format("gridpoint(x:%d,y:%d-%d)",self.gridpointer.x,self.gridpointer.y,self.gridpointer.y * grid_col + self.gridpointer.x),debugareax, debugareay+40)
-	
+		local gridIndex = self.gridpointer.y * COL_NUMS + self.gridpointer.x
+		if(gridIndex >= 0) and (gridIndex < COL_NUMS * ROW_NUMS - 1) then 
+		love.graphics.print(string.format("gridpoint(x:%d,y:%d-%d),canpass(%s)",self.gridpointer.x,self.gridpointer.y,gridIndex,(Map[gridIndex].iCanPass and "true") or "false"),debugareax, debugareay+40)
+		end
 		if not self.weapons.hover then
 			love.graphics.print("weapons leave", debugareax, debugareay+60) 
 		else
@@ -240,16 +242,16 @@ function Game:draw()
 		-- unit grid = 17*17
 		
 	
-	    for i = 0, grid_row, 1 do	-- draw h line
+	    for i = 0, ROW_NUMS, 1 do	-- draw h line
 	
 	        love.graphics.setColor(color["grid"])
-			love.graphics.line( battlearea.left, battlearea.top + i*GRID_SIZE, battlearea.top + grid_col*GRID_SIZE, battlearea.left + i*GRID_SIZE )
+			love.graphics.line( battlearea.left, battlearea.top + i*GRID_SIZE, battlearea.top + COL_NUMS*GRID_SIZE, battlearea.left + i*GRID_SIZE )
 	        love.graphics.setColor(color["menu_text"])
 			love.graphics.print( i, battlearea.left + 5, battlearea.top + i*GRID_SIZE + 10  )
 	    end
-	    for i = 0, grid_col, 1 do -- draw v line
+	    for i = 0, COL_NUMS, 1 do -- draw v line
 			love.graphics.setColor(color["grid"])
-			love.graphics.line( battlearea.left + i*GRID_SIZE, battlearea.top, battlearea.left + i*GRID_SIZE, battlearea.top + GRID_SIZE*grid_row)
+			love.graphics.line( battlearea.left + i*GRID_SIZE, battlearea.top, battlearea.left + i*GRID_SIZE, battlearea.top + GRID_SIZE*ROW_NUMS)
 	        love.graphics.setColor(color["menu_text"])
 			love.graphics.print( i, battlearea.left + i*GRID_SIZE + 5, battlearea.top + 10  )
 	    end  
@@ -270,10 +272,10 @@ function Game:draw()
 		-- 选择了碉堡武器
 		if i >0 then
 			if self.money >= tower_upgrade[i][1].buy_cost and 
-			(self.maps[grid_col*gy + gx+1] == 0) and
-			(self.maps[grid_col*gy + gx +2] == 0)	and
-			(self.maps[grid_col*(gy+1) + gx +1] == 0) and
-			(self.maps[grid_col*(gy+1) + gx+2] == 0) then
+			(self.maps[COL_NUMS*gy + gx+1] == 0) and
+			(self.maps[COL_NUMS*gy + gx +2] == 0)	and
+			(self.maps[COL_NUMS*(gy+1) + gx +1] == 0) and
+			(self.maps[COL_NUMS*(gy+1) + gx+2] == 0) then
 				love.graphics.setColor(color["grid_open"])
 			else 
 				love.graphics.setColor(color["grid_close"])
@@ -488,8 +490,8 @@ function Game:update(dt)
 		local y = love.mouse.getY()
 		self.mousepointer.x = x
 		self.mousepointer.y = y
-		local gx = math.floor((x - battlearea.left -GRID_SIZE/2) / GRID_SIZE)
-		local gy = math.floor((y - battlearea.top -GRID_SIZE/2 ) / GRID_SIZE)
+		local gx = math.floor((x - battlearea.left) / GRID_SIZE)
+		local gy = math.floor((y - battlearea.top) / GRID_SIZE)
 		
 
 		if(gy <= 30) then
@@ -502,16 +504,16 @@ function Game:update(dt)
 				-- 设置地图位置为可以通过
 				local gx = bh.gridpointer.x
 				local gy = bh.gridpointer.y
-				Map[grid_col*gy + gx ].iCanPass = true
-				Map[grid_col*gy + gx + 1].iCanPass = true
-				Map[grid_col*(gy+1) + gx ].iCanPass = true
-				Map[grid_col*(gy+1) + gx + 1].iCanPass = true
+				Map[COL_NUMS*gy + gx ].iCanPass = true
+				Map[COL_NUMS*gy + gx + 1].iCanPass = true
+				Map[COL_NUMS*(gy+1) + gx ].iCanPass = true
+				Map[COL_NUMS*(gy+1) + gx + 1].iCanPass = true
 				table.remove(self.blockhouses,n)
 
-				self.maps[grid_col*gy + gx + 1] = 0
-				self.maps[grid_col*gy + gx + 2] = 0
-				self.maps[grid_col*(gy+1) + gx + 1] = 0
-				self.maps[grid_col*(gy+1) + gx + 2] = 0
+				self.maps[COL_NUMS*gy + gx + 1] = 0
+				self.maps[COL_NUMS*gy + gx + 2] = 0
+				self.maps[COL_NUMS*(gy+1) + gx + 1] = 0
+				self.maps[COL_NUMS*(gy+1) + gx + 2] = 0
    			else
 				bh:update(dt)
 			end
@@ -655,9 +657,9 @@ function Game:IsBlocked(from)
 	local isBlocked = true
 	local startIndex,endIndex
 	AStarInit()
-	if(from == 1) then
+	if(from == 1) then --check left
 		startIndex = 422
-		endIndex = 426
+		endIndex = 445
 	else
 		startIndex = 68
 		endIndex = 796
@@ -695,8 +697,8 @@ function Game:mousepressed(x, y, button)
 	local y = love.mouse.getY()
 	self.mousepointer.x = x
 	self.mousepointer.y = y
-	local gx = math.floor((x - battlearea.left -GRID_SIZE/2) / GRID_SIZE)
-	local gy = math.floor((y - battlearea.top -GRID_SIZE/2 ) / GRID_SIZE)
+	local gx = math.floor((x - battlearea.left ) / GRID_SIZE)
+	local gy = math.floor((y - battlearea.top  ) / GRID_SIZE)
 	
 	-- 下一关 
 	if(x > 3 and x < 55 and y > 855 and y < 950) then
@@ -718,31 +720,31 @@ function Game:mousepressed(x, y, button)
 	end 
 	local i = self:getSelectWepons()
 	if i >= 0 and self.money >= tower_upgrade[i][1].buy_cost and 
-			(self.maps[grid_col*gy + gx+1] == 0) and
-			(self.maps[grid_col*gy + gx +2] == 0)	and
-			(self.maps[grid_col*(gy+1) + gx +1] == 0) and
-			(self.maps[grid_col*(gy+1) + gx+2] == 0) then
+			(self.maps[COL_NUMS*gy + gx+1] == 0) and
+			(self.maps[COL_NUMS*gy + gx +2] == 0)	and
+			(self.maps[COL_NUMS*(gy+1) + gx +1] == 0) and
+			(self.maps[COL_NUMS*(gy+1) + gx+2] == 0) then
 		-- 增加一个碉堡
-		Map[grid_col*gy + gx ].iCanPass = false
-		Map[grid_col*gy + gx + 1].iCanPass = false
-		Map[grid_col*(gy+1) + gx ].iCanPass = false
-		Map[grid_col*(gy+1) + gx + 1].iCanPass = false
+		Map[COL_NUMS*gy + gx ].iCanPass = false
+		Map[COL_NUMS*gy + gx + 1].iCanPass = false
+		Map[COL_NUMS*(gy+1) + gx ].iCanPass = false
+		Map[COL_NUMS*(gy+1) + gx + 1].iCanPass = false
 		
-		self.maps[grid_col*gy + gx + 1] = 1
-		self.maps[grid_col*gy + gx + 2] = 1
-		self.maps[grid_col*(gy+1) + gx + 1] = 1
-		self.maps[grid_col*(gy+1) + gx + 2] = 1
+		self.maps[COL_NUMS*gy + gx + 1] = 1
+		self.maps[COL_NUMS*gy + gx + 2] = 1
+		self.maps[COL_NUMS*(gy+1) + gx + 1] = 1
+		self.maps[COL_NUMS*(gy+1) + gx + 2] = 1
 		
 		if(self:IsBlocked(0) or self:IsBlocked(1)) then
-			Map[grid_col*gy + gx ].iCanPass = true
-			Map[grid_col*gy + gx + 1].iCanPass = true
-			Map[grid_col*(gy+1) + gx ].iCanPass = true
-			Map[grid_col*(gy+1) + gx + 1].iCanPass = true
+			Map[COL_NUMS*gy + gx ].iCanPass = true
+			Map[COL_NUMS*gy + gx + 1].iCanPass = true
+			Map[COL_NUMS*(gy+1) + gx ].iCanPass = true
+			Map[COL_NUMS*(gy+1) + gx + 1].iCanPass = true
 			
-			self.maps[grid_col*gy + gx + 1] = 0
-			self.maps[grid_col*gy + gx + 2] = 0
-			self.maps[grid_col*(gy+1) + gx + 1] = 0
-			self.maps[grid_col*(gy+1) + gx + 2] = 0
+			self.maps[COL_NUMS*gy + gx + 1] = 0
+			self.maps[COL_NUMS*gy + gx + 2] = 0
+			self.maps[COL_NUMS*(gy+1) + gx + 1] = 0
+			self.maps[COL_NUMS*(gy+1) + gx + 2] = 0
 			
 			table.insert(self.hints,Hint.create("fadeout","BLOCK!",300*1.6,550*1.6))
 		else
