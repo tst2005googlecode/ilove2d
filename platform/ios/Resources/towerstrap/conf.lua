@@ -21,4 +21,5 @@ function love.conf(t)
     t.modules.physics = false    -- Enable the physics module (boolean)
     t.modules.thread = false
     t.modules.thread = true
+    t.modules.ai = true
 end

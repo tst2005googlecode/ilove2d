@@ -26,7 +26,7 @@ require("lua/radar.lua")
 require("lua/blockhouse.lua")
 
 require("lua/hint.lua")
-require("lua/astar.lua")
+--require("lua/astar.lua")
 require("lua/game.lua")
 
 

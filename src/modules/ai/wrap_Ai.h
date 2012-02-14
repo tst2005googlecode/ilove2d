@@ -18,25 +18,25 @@
 * 3. This notice may not be removed or altered from any source distribution.
 **/
 
-#ifndef LOVE_TIMER_COCOA_WRAP_TIMER_H
-#define LOVE_TIMER_COCOA_WRAP_TIMER_H
+#ifndef LOVE_AI_WRAP_AI_H
+#define LOVE_AI_WRAP_AI_H
 
 // LOVE
 #include <common/config.h>
+#include "Ai.h"
 
 namespace love
 {
 namespace ai
 {
-	int w_step(lua_State * L);
-	int w_getDelta(lua_State * L);
-	int w_getFPS(lua_State * L);
-	int w_sleep(lua_State * L);
-	int w_getTime(lua_State * L);
-	int w_getMicroTime(lua_State * L);
-	extern "C" LOVE_EXPORT int luaopen_love_timer(lua_State * L);
+    #define MAX_MAPSIZE 10000
+	int w_astarinit(lua_State * L);
+    int w_astarsetdata(lua_State * L);
+    int w_astarsetindexdata(lua_State * L);
+    int w_astarfindpath(lua_State * L);
+	extern "C" LOVE_EXPORT int luaopen_love_ai(lua_State * L);
 
 } // ai
 } // love
 
-#endif // LOVE_TIMER_COCOA_WRAP_TIMER_H
+#endif // LOVE_AI_WRAP_AI_H

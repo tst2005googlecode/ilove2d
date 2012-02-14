@@ -35,7 +35,7 @@ function Creature.create(game,number,gx,gy,live)
 	temp.hidden = false
 	temp.antihidden_time = 0 --破坏隐藏时间
  	temp.update_time = 1
-	temp.drawMap =  { n = KMapWidth *  KMapHeight }
+	temp.drawMap =  { n = COL_NUMS *  ROW_NUMS }
 	temp.foundpath = false
 	temp.game = game
 	if(game~=nil) then 
@@ -159,8 +159,8 @@ function Creature:draw()
 		-- 画线路图 
 		if(self.drawMap ~= nil) then
 			for i = 1, #self.map do
-				nextX = self.map[i].iX * GRID_SIZE + GRID_SIZE /2
-				nextY = self.map[i].iY * GRID_SIZE *2 /2
+				nextX = self:getX(self.map[i]) * GRID_SIZE + GRID_SIZE /2
+				nextY = self:getY(self.map[i]) * GRID_SIZE *2 /2
 				love.graphics.line( currentX, currentY, nextX ,nextY )
 				currentX = nextX
 				currentY = nextY
@@ -247,22 +247,29 @@ function Creature:ReCaleGridXY()
 	self.gy = gy
 	self.startIndex = gx + gy * COL_NUMS
 end
-
+function Creature:getX(index)
+    return index % COL_NUMS
+end
+function Creature:getY(index)
+    return math.floor(index / COL_NUMS)
+end
 function Creature:MoveOnLand(dt)
 
 	local speed = dt*self.speed * 10
 	if(self.slowly) then
 	    speed = speed * 0.5
 	end
-	if(#self.map >0) then
+	if(self.map ~= nil and #self.map >0) then
 		local currentIndex = self.gx + self.gy * COL_NUMS
 		--print(string.format("move out from %d to %d,#self.map = %d",currentIndex,self.endIndex,#self.map))
 		--pr(self.map,"map")
 		local nextX,nextY
 		--print(string.format("check startIndex and endIndex,%d,%d",self.startIndex ,self.endIndex))
-
-		nextX = self.map[1].iX * GRID_SIZE + GRID_SIZE /2
-		nextY = self.map[1].iY * GRID_SIZE + GRID_SIZE /2
+        if(self.map[1] == nil) then
+            pr(self.map,"map")
+        end
+		nextX = self:getX(self.map[1]) * GRID_SIZE + GRID_SIZE /2
+		nextY = self:getY(self.map[1]) * GRID_SIZE + GRID_SIZE /2
 		if (math.abs(nextX - self.x) + math.abs(nextY - self.y)) < 4 then
 			table.remove(self.map,1)
 			self:ReCaleGridXY()
@@ -336,7 +343,7 @@ function Creature:update(dt)
 		self.update_time = 0
 		local maxaff = 0
 		for n,bh in pairs(state.blockhouses) do
-			if (bh.live == 1 and math.abs(self.x - bh.x) < 34 and math.abs(self.y - bh.y) < 34) then
+			if (bh.live == 1 and math.abs(self.x + self.width - bh.x) < 34 and math.abs(self.y + self.height - bh.y) < 34) then
 				bh.ice = true
 				bh.ice_time = 2
 				maxaff = maxaff + 1
@@ -358,7 +365,7 @@ function Creature:update(dt)
 		self.hover = true
 	end
 
-	if (self.live ~= true) then
+	if (self.health <= 0 ) then
 		return
 	end
 	
@@ -372,7 +379,7 @@ function Creature:update(dt)
 	if  ((self.number == 6) and
 	     ((self.from == 0 and gy >29) or (self.from == 1 and gx > 25))) or
 		self.startIndex == self.endIndex then --到达目标
-		print("reach") 
+		--print("reach") 
 		self.pass = true
 		love.audio.play(sound.creature_rich_dest)
 		return
@@ -389,59 +396,38 @@ function Creature:update(dt)
 		self:ReCaleGridXY()
 		
 		if(self.foundpath == false) then
-			--pr (state.blockhouses,"state.blockhouses")
 
-			AStarInit();
 			local startIndex = self.startIndex
 			local endIndex = self.endIndex
-			AStarPathFind( startIndex , endIndex )
-			--AStarDrawPath(self.endIndex)
-
-			local node = Map[endIndex]
-			if(node.iParent) then
+			
+            print("love.ai.astarfindpath start ")
+            self.map = love.ai.astarfindpath( startIndex, endIndex)
+            print("love.ai.astarfindpath end")
+			
+            
+			if (self.map and #self.map>0) then
 				self.foundpath = true
+            else
+                self.health = 0
 			end
-
-			self.map = {}
-			while( node.iParent ) do
-			   self.drawMap[node.iIndex] = 2
-			   table.insert(self.map, 1, node)
-			   node = node.iParent
-			end
-	--		for i = 1, #self.map do
-	--			print(self.map[i].iIndex .. ",")
-	--		end
 		end
 
-		local isNeedReBuildPath = false
-		-- 碉堡数量改变
-		if isblockhouseNumChanged then
-			isblockhouseNumChanged = false
-			isNeedReBuildPath = true
-			print("rebuild because #self.game.blockhouses changed!")
-		else
-		-- 检测路是否被毁坏
-
+            local isNeedReBuildPath = false
+		 
+            if (self.map and #self.map>0)then
 			for i = 1, #self.map do
-				local index =  self.map[i].iIndex + 1   --当前路径
-
+				local index =  self.map[i]+1
 
 				if self.game.maps[index] == 1 then
 					isNeedReBuildPath = true
 					break
 				end
 
-
-
 			end
+             
 		end
 		if isNeedReBuildPath  then
-			for i = 1, #self.map do
-				table.remove(self.map,i)
-			end
-
 	  		self.foundpath = false
-
 		end
 	end
 	

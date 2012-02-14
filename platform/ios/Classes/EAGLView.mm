@@ -102,9 +102,15 @@
     CGPoint tpoint = [touch locationInView:[touch view]];
     mousex = tpoint.x;
     mousey = tpoint.y;
-    mouse_state = 1;
+    mouse_state = 0;
     
-    
+    FSDL_Event* s_event = new FSDL_Event;
+    //s_event->mouse = new FSDL_MouseEvent;
+    s_event->type = FSDL_MOUSEBUTTONUP;
+    //s_event->mouse.button = FSDL_BUTTON_LEFT;
+    s_event->mouse.x = mousex;
+    s_event->mouse.y = mousey;
+    msgQ.push(s_event);
     
 }
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -114,7 +120,15 @@
     CGPoint tpoint = [touch locationInView:[touch view]];
     mousex = tpoint.x;
     mousey = tpoint.y;
-    //mouse_state = 1;
+    mouse_state = 1;
+    
+    FSDL_Event* s_event = new FSDL_Event;
+    //s_event->mouse = new FSDL_MouseEvent;
+    s_event->type = FSDL_NOEVENT;
+    //s_event->mouse.button = FSDL_BUTTON_LEFT;
+    s_event->mouse.x = mousex;
+    s_event->mouse.y = mousey;
+    msgQ.push(s_event);
 }
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {

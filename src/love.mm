@@ -41,6 +41,7 @@
 #include <sound/wrap_Sound.h>
 #include <timer/cocoa/wrap_Timer.h>
 #include <thread/wrap_Thread.h>
+#include <ai/wrap_Ai.h>
 
 // Libraries.
 #include "libraries/luasocket/luasocket.h"
@@ -69,6 +70,7 @@ static const luaL_Reg modules[] = {
 	{ "love.sound", love::sound::luaopen_love_sound },
 	{ "love.timer", love::timer::cocoa::luaopen_love_timer },
 	{ "love.thread", love::thread::luaopen_love_thread },
+    { "love.ai", love::ai::luaopen_love_ai },
 	{ 0, 0 }
 };
 

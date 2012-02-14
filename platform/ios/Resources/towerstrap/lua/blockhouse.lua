@@ -66,7 +66,7 @@ function Blockhouse.create(weapon,mapgridpointer)
 	temp.gridpointer.x = mapgridpointer.x
 	temp.gridpointer.y = mapgridpointer.y
 
-	pr(temp.gun,"create blockhouse")
+	--pr(temp.gun,"create blockhouse")
 	return temp
 	
 end
@@ -78,14 +78,14 @@ function Blockhouse:draw()
 	if(i == 1) then
 		cxoffset = -2
 	end
-	love.graphics.draw(graphics["blockhous"][i], self.x , self.y, angleToradians(self.angle),  1.6, 1.6, self.width/2 + cxoffset, self.height/2)
+	love.graphics.draw(graphics["blockhous"][i], self.x , self.y, angleToradians(self.angle),  1, 1, self.width/2 + cxoffset, self.height/2)
 	
 	if self.ice then
 	    love.graphics.setColor(255,255,255,200)
-     	love.graphics.rectangle( "fill", self.centX,self.centY,34,34)
-     	love.graphics.draw(graphics["bh_border_ice"],self.x,self.y, 0,  1.6, 1.6, graphics["bh_border_ice"]:getWidth()/2 , graphics["bh_border_ice"]:getHeight()/2)
+     	love.graphics.rectangle( "fill", self.x - graphics["bh_border_ice"]:getWidth()/2,self.y - graphics["bh_border_ice"]:getHeight()/2,graphics["bh_border_ice"]:getWidth(),graphics["bh_border_ice"]:getHeight())
+     	love.graphics.draw(graphics["bh_border_ice"],self.x,self.y, 0,  1, 1, graphics["bh_border_ice"]:getWidth()/2 , graphics["bh_border_ice"]:getHeight()/2)
 	else
-		love.graphics.draw(graphics["bh_border"],self.x,self.y, 0,  1.6, 1.6, graphics["bh_border"]:getWidth()/2, graphics["bh_border"]:getHeight()/2)
+		love.graphics.draw(graphics["bh_border"],self.x,self.y, 0,  1, 1, graphics["bh_border"]:getWidth()/2, graphics["bh_border"]:getHeight()/2)
 	end
 
 	
@@ -155,7 +155,7 @@ function Blockhouse:drawselector()
 
 end
 function Blockhouse:update(dt)
-	dt = dt * 0.1
+	dt = dt
 	--print("dt"..dt)
 	if(self.ice_time>0) then
 	    self.ice_time = self.ice_time - dt
@@ -170,17 +170,17 @@ function Blockhouse:update(dt)
 	local y = love.mouse.getY()
 	
 	if x > self.centX
-		and x < self.centX + self.width*1.6
+		and x < self.centX + self.width
 		and y > self.centY
-		and y < self.centY + self.height*1.6 then
+		and y < self.centY + self.height then
 		self.hover = true
 	elseif x > self.centX
-	    and x < self.centX + self.width*1.6
+	    and x < self.centX + self.width
 	    and y > self.centY - GRID_SIZE
 	    and y < self.centY - 2 then
 	    self.hover_up = true
 	elseif x > self.centX
-	    and x < self.centX + self.width*1.6
+	    and x < self.centX + self.width
 	    and y > self.y + GRID_SIZE
 	    and y < self.y + GRID_SIZE * 2 then
 	    self.hover_down = true

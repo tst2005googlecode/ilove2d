@@ -198,7 +198,7 @@ end
 A Star 寻路主函数
 ]]
 function AStarInit()
-    print(" AStarInit() ")
+    --print(" AStarInit() ")
 	openList:Clear()
 	closeList:Clear()
 	-- 初始化地图表 --
@@ -382,7 +382,7 @@ function main()
 
 
  local x = os.clock()
- print(" Path Finding ")
+ --print(" Path Finding ")
 
  local l = 2
  for i=1,l do
@@ -390,18 +390,11 @@ function main()
  setblock(i-1)
  --setblock(1)
  AStarPathFind( startIndex , endIndex )
-
-
-
-
-
-
-
- AStarOutString()
+ -- AStarOutString()
 
  end
- print(" Path Finding done , loop  " .. l)
- print(string.format("elapsed time: %.6f\n", os.clock() - x))
+ --print(" Path Finding done , loop  " .. l)
+ --print(string.format("elapsed time: %.6f\n", os.clock() - x))
 -- local closeNode = closeList.iRoot
 --
 -- local closeNodeCount = 0

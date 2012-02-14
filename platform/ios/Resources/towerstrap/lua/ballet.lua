@@ -38,9 +38,9 @@ function Ballet:draw()
 		love.graphics.setColor(color.black)
 		love.graphics.circle( "fill", self.x, self.y, 2,255 ) 
 	elseif self.type == 1 then --rocket
-		love.graphics.draw(graphics.rocket_fire, self.x, self.y, angleToradians(self.angle) + 90,  1, 1, graphics.rocket_fire:getWidth()/2, graphics.rocket_fire:getHeight()/2)
+		love.graphics.draw(graphics.rocket_fire, self.x, self.y, angleToradians(self.angle + 90) ,  1, 1, graphics.rocket_fire:getWidth()/2, graphics.rocket_fire:getHeight()/2)
 	elseif self.type == 2 then -- cannon
-	    love.graphics.draw(graphics.canon_fire, self.x, self.y, angleToradians(self.angle) + 90,  1, 1, graphics.canon_fire:getWidth()/2, graphics.canon_fire:getHeight()/2)
+	    love.graphics.draw(graphics.canon_fire, self.x, self.y, angleToradians(self.angle + 90),  1, 1, graphics.canon_fire:getWidth()/2, graphics.canon_fire:getHeight()/2)
 	elseif self.type == 3 then -- slowdown
 	    love.graphics.draw(graphics.shock_fire, self.x, self.y, angleToradians(self.angle) + self.x + self.y,  1, 1, graphics.shock_fire:getWidth()/2, graphics.shock_fire:getHeight()/2)
 	elseif self.type == 4 then --aim

@@ -10,7 +10,7 @@
 
 Weapons = {}
 Weapons.__index = Weapons
-WEAPON_WIDTH = 40*1.6;
+WEAPON_WIDTH = 64;
 function Weapons.create(x,y)
 	
 	local temp = {}
@@ -30,7 +30,7 @@ function Weapons.create(x,y)
 end
 function Weapons:getSelected()
 	return self.selected;
-end
+end 
 function Weapons:draw()
 	--draw weapon tips baord
 	love.graphics.setColor(color["menu_bg"])
@@ -44,7 +44,7 @@ function Weapons:draw()
 		self:DrawObjTips(hoverItem)
 	end
 	--draw weapons images
-	love.graphics.draw(graphics["weapons"], self.x , self.y, 0, 1.6,1.6, 0, 0 )
+	love.graphics.draw(graphics["weapons"], self.x , self.y, 0, 1,1, 0, 0 )
 	
 	if self.selected > 0 then
 		if hoverItem < 0 then

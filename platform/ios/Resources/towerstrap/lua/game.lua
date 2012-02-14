@@ -18,7 +18,8 @@ debugareax = 490
 debugareay = 760
 
 function Game.create()
-	
+	love.ai.astarinit(28,32)
+    
 	love.audio.play(music["game"])
 	
 	local temp = {}
@@ -64,16 +65,10 @@ function Game.create()
 			 1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1
 			}
 	
-
-	
-	for i = 0, COL_NUMS * ROW_NUMS - 1 do
-		if temp.maps[i+1] <= 0 then
-		   	Map[i].iCanPass = true
-	   	else
-		   	Map[i].iCanPass = false
-	   	end
-	end
-	
+    
+	love.ai.astarsetdata(temp.maps)
+    
+	 	
     temp.stages ={ --关卡设计
 				{ time = 20, creature = 0, number = 10 },
 				{ time = 20, creature = 1, number = 20 }, 
@@ -187,10 +182,10 @@ function Game.create()
 	--temp.time = 0 -- the time for this game
 	temp.win = -999 -- if the game is won and timer for fadein
 	temp.pause = false -- if the game is paused
-	temp.button = {	new = Button.create("New Game", 150*1.6, 400*1.6),
-					resume = Button.create("Resume", 160*1.6, 400*1.6),
-					quit = Button.create("Quit", 300*1.6, 400*1.6) }
-	temp.weapons = Weapons.create(195*1.6,595*1.6)
+	temp.button = {	new = Button.create("New Game", 240, 640),
+					resume = Button.create("Resume", 256, 	640),
+					quit = Button.create("Quit", 480, 640) }
+	temp.weapons = Weapons.create(312,952)
 	return temp
 	
 end
@@ -225,7 +220,7 @@ function Game:draw()
 		love.graphics.print("mousepoint(x: " .. self.mousepointer.x .. ",y:" .. self.mousepointer.y,debugareax, debugareay+20)
 		local gridIndex = self.gridpointer.y * COL_NUMS + self.gridpointer.x
 		if(gridIndex >= 0) and (gridIndex < COL_NUMS * ROW_NUMS - 1) then 
-		love.graphics.print(string.format("gridpoint(x:%d,y:%d-%d),canpass(%s)",self.gridpointer.x,self.gridpointer.y,gridIndex,(Map[gridIndex].iCanPass and "true") or "false"),debugareax, debugareay+40)
+		love.graphics.print(string.format("gridindex:%d,gridpoint(x:%d,y:%d-%d),canpass(n/a)",gridIndex,self.gridpointer.x,self.gridpointer.y,gridIndex),debugareax, debugareay+40)
 		end
 		if not self.weapons.hover then
 			love.graphics.print("weapons leave", debugareax, debugareay+60) 
@@ -293,12 +288,12 @@ function Game:draw()
 
    			love.graphics.setColor(color["text"])
 			love.graphics.setFont(font["tiny"])
-			love.graphics.draw(graphics.power,74*1.6,570*1.6)
-			love.graphics.print(damage,94*1.6,570*1.6)
-			love.graphics.draw(graphics.coast,120*1.6,570*1.6)
-			love.graphics.print(buy_cost,144*1.6,570*1.6)
-			love.graphics.draw(graphics.update,74*1.6,604*1.6)
-			love.graphics.print(shoot_time,94*1.6,604*1.6)
+			love.graphics.draw(graphics.power,118,912)
+			love.graphics.print(damage,150,912)
+			love.graphics.draw(graphics.coast,192,912)
+			love.graphics.print(buy_cost,230,912)
+			love.graphics.draw(graphics.update,118,966)
+			love.graphics.print(shoot_time,150,966)
 
 		end
 		
@@ -307,16 +302,16 @@ function Game:draw()
 	-- draw Time
 	love.graphics.setColor(color["text"])
 	love.graphics.setFont(font["medium"])
-	love.graphics.print(string.format("%d", self.time), 135*1.6, 512*1.6)
+	love.graphics.print(string.format("%d", self.time), 216, 819)
 	-- draw health
-	love.graphics.print(self.health, 350*1.6, 512*1.6)
+	love.graphics.print(self.health, 560, 819)
 	-- draw money
-	love.graphics.print(self.money,115*1.6,40*1.6)
+	love.graphics.print(self.money,184,64)
 	-- draw scope
-	love.graphics.print(self.scope,350*1.6,40*1.6)
+	love.graphics.print(self.scope,560,64)
 	-- draw stage level
     if(self.stage < #self.stages) then
-		love.graphics.print(self.stage,26*1.6,576*1.6)
+		love.graphics.print(self.stage,42,	921)
 		
 		for i = 1,5 do
 		   local draw_stage = self.stage + i;
@@ -331,7 +326,7 @@ function Game:draw()
 				local r, g, b, a = love.graphics.getColor()
 				love.graphics.setColorMode("modulate")
 				love.graphics.setColor(255, 255, 255, 255 - 150 * i / 5)
-				love.graphics.draw(graphics["creature"][creature_number],25,900 - (i-1) * 30*1.6 )
+				love.graphics.draw(graphics["creature"][creature_number],25,900 - (i-1) * 48 )
 				love.graphics.setColor(r, g, b, a)
 				love.graphics.setColorMode("replace")
 		   end
@@ -377,19 +372,19 @@ function Game:draw()
 
 		love.graphics.setColor(color["text"])
 		love.graphics.setFont(font["tiny"])
-		love.graphics.draw(graphics.power,74*1.6,570*1.6)
-		love.graphics.print(damage,94*1.6,570*1.6)
+		love.graphics.draw(graphics.power,118,912)
+		love.graphics.print(damage,150,912)
 
 
-		love.graphics.draw(graphics.update,74*1.6,604*1.6)
-		love.graphics.print(shoot_time,94*1.6,604*1.6)
+		love.graphics.draw(graphics.update,118,966)
+		love.graphics.print(shoot_time,150,966)
 
 		love.graphics.setColor(225,85,32)
 		if(damage_next~=nil) then
-			love.graphics.print(damage_next,144*1.6,570*1.6)
+			love.graphics.print(damage_next,230,912)
 		end
 		if(shoot_time_next ~= nil) then
-		    love.graphics.print(shoot_time_next,144*1.6,604*1.6)
+		    love.graphics.print(shoot_time_next,230,966)
 		end
 	end
 	--画选择的碉堡边框
@@ -409,10 +404,10 @@ function Game:draw()
 			love.graphics.rectangle("fill",0,0,love.graphics.getWidth(),love.graphics.getHeight())
 			love.graphics.setColor(color["main"])
 			love.graphics.setFont(font["huge"])
-			love.graphics.printf("CONGRATULATIONS", 0, 150*1.6, love.graphics.getWidth(), "center")
+			love.graphics.printf("CONGRATULATIONS", 0, 240, love.graphics.getWidth(), "center")
 			love.graphics.setColor(color["text"])
 			love.graphics.setFont(font["default"])
-			love.graphics.printf("You completed a level " .. self.stage .. " ,Scope is: \n" .. self.scope, 0, 200*1.6, love.graphics.getWidth(), "center")
+			love.graphics.printf("You completed a level " .. self.stage .. " ,Scope is: \n" .. self.scope, 0, 320, love.graphics.getWidth(), "center")
 			-- Buttons
 			self.button["new"]:draw()
 			self.button["quit"]:draw()
@@ -429,7 +424,7 @@ function Game:draw()
 		
 		love.graphics.setColor(color["main"])
 		love.graphics.setFont(font["huge"])
-		love.graphics.printf("PAUSED", 0, 150*1.6, love.graphics.getWidth(), "center")
+		love.graphics.printf("PAUSED", 0, 240, love.graphics.getWidth(), "center")
 		love.graphics.setColor(color["text"])
 		love.graphics.setFont(font["default"])
 		-- Buttons
@@ -453,7 +448,7 @@ function Game:draw()
 		love.graphics.printf("YOU LOST", 0, 150, love.graphics.getWidth(), "center")
 		love.graphics.setColor(color["text"])
 		love.graphics.setFont(font["default"])
-		love.graphics.printf("You completed a level " .. self.stage .. "/80 ,Scope is: \n" .. self.scope, 0, 200*1.6, love.graphics.getWidth(), "center")
+		love.graphics.printf("You completed a level " .. self.stage .. "/80 ,Scope is: \n" .. self.scope, 0, 320, love.graphics.getWidth(), "center")
 		-- Buttons
 		self.button["new"]:draw()
 		self.button["quit"]:draw()
@@ -504,10 +499,12 @@ function Game:update(dt)
 				-- 设置地图位置为可以通过
 				local gx = bh.gridpointer.x
 				local gy = bh.gridpointer.y
-				Map[COL_NUMS*gy + gx ].iCanPass = true
-				Map[COL_NUMS*gy + gx + 1].iCanPass = true
-				Map[COL_NUMS*(gy+1) + gx ].iCanPass = true
-				Map[COL_NUMS*(gy+1) + gx + 1].iCanPass = true
+				                 
+                love.ai.astarsetindexdata(COL_NUMS*gy + gx, 0)
+                love.ai.astarsetindexdata(COL_NUMS*gy + gx + 1, 0)
+                love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx , 0)
+                love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx + 1, 0)
+                
 				table.remove(self.blockhouses,n)
 
 				self.maps[COL_NUMS*gy + gx + 1] = 0
@@ -656,7 +653,7 @@ end
 function Game:IsBlocked(from)
 	local isBlocked = true
 	local startIndex,endIndex
-	AStarInit()
+	--AStarInit()
 	if(from == 1) then --check left
 		startIndex = 422
 		endIndex = 445
@@ -665,11 +662,15 @@ function Game:IsBlocked(from)
 		endIndex = 796
 	end
 	
-	AStarPathFind( startIndex , endIndex )
+	--AStarPathFind( startIndex , endIndex )
+    
+    
+    local foundnodes = love.ai.astarfindpath( startIndex, endIndex)
+    
 	--AStarDrawPath(self.endIndex)
 
-	local node = Map[endIndex]
-	if(node.iParent) then
+	--local node = Map[endIndex]
+	if(foundnodes) then
 		isBlocked = false
 	end
 
@@ -693,19 +694,18 @@ function Game:mousepressed(x, y, button)
 		end
 	end
 	
-	local x = love.mouse.getX()
-	local y = love.mouse.getY()
-	self.mousepointer.x = x
-	self.mousepointer.y = y
-	local gx = math.floor((x - battlearea.left ) / GRID_SIZE)
-	local gy = math.floor((y - battlearea.top  ) / GRID_SIZE)
+	local _x = self.mousepointer.x 
+	local _y = self.mousepointer.y
+	 
+	local gx = math.floor((_x - battlearea.left ) / GRID_SIZE)
+	local gy = math.floor((_y - battlearea.top  ) / GRID_SIZE)
 	
 	-- 下一关 
 	if(x > 3 and x < 55 and y > 855 and y < 950) then
 	    self.time = 0
 	    local bonus = self.stages[self.stage].number
 	    self.scope = self.scope + bonus
-		table.insert(self.hints,Hint.create("fadeout2","TIME BONUS!" .. bonus,300*1.6,550*1.6))
+		table.insert(self.hints,Hint.create("fadeout2","TIME BONUS!" .. bonus,480,880))
 	end
 	
 	-- 按home键 
@@ -725,10 +725,11 @@ function Game:mousepressed(x, y, button)
 			(self.maps[COL_NUMS*(gy+1) + gx +1] == 0) and
 			(self.maps[COL_NUMS*(gy+1) + gx+2] == 0) then
 		-- 增加一个碉堡
-		Map[COL_NUMS*gy + gx ].iCanPass = false
-		Map[COL_NUMS*gy + gx + 1].iCanPass = false
-		Map[COL_NUMS*(gy+1) + gx ].iCanPass = false
-		Map[COL_NUMS*(gy+1) + gx + 1].iCanPass = false
+		         
+        love.ai.astarsetindexdata(COL_NUMS*gy + gx, 1)
+                love.ai.astarsetindexdata(COL_NUMS*gy + gx + 1, 1)
+                love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx , 1)
+                love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx + 1, 1)
 		
 		self.maps[COL_NUMS*gy + gx + 1] = 1
 		self.maps[COL_NUMS*gy + gx + 2] = 1
@@ -736,17 +737,18 @@ function Game:mousepressed(x, y, button)
 		self.maps[COL_NUMS*(gy+1) + gx + 2] = 1
 		
 		if(self:IsBlocked(0) or self:IsBlocked(1)) then
-			Map[COL_NUMS*gy + gx ].iCanPass = true
-			Map[COL_NUMS*gy + gx + 1].iCanPass = true
-			Map[COL_NUMS*(gy+1) + gx ].iCanPass = true
-			Map[COL_NUMS*(gy+1) + gx + 1].iCanPass = true
+			             
+            love.ai.astarsetindexdata(COL_NUMS*gy + gx, 0)
+                love.ai.astarsetindexdata(COL_NUMS*gy + gx + 1, 0)
+                love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx , 0)
+                love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx + 1, 0)
 			
 			self.maps[COL_NUMS*gy + gx + 1] = 0
 			self.maps[COL_NUMS*gy + gx + 2] = 0
 			self.maps[COL_NUMS*(gy+1) + gx + 1] = 0
 			self.maps[COL_NUMS*(gy+1) + gx + 2] = 0
 			
-			table.insert(self.hints,Hint.create("fadeout","BLOCK!",300*1.6,550*1.6))
+			table.insert(self.hints,Hint.create("fadeout","BLOCK!",480,880))
 		else
 			local blockhouse = Blockhouse.create(i,self.gridpointer)
 	
