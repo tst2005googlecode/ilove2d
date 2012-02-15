@@ -150,7 +150,7 @@ function Ballet:aimTraceMove(dt)
 	local dy = self.y - self.target.y
 
 	--//角速度
-	local omega = 4
+	local omega = 240 * dt
 --	//目标与y轴的夹角
 	local angle = ( 270 + math.atan2(dy, dx)*180/math.pi) % 360
 --	//目标与导弹的夹角

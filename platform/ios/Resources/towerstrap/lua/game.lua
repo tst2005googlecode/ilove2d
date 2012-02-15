@@ -339,7 +339,9 @@ function Game:draw()
 	self.weapons:draw()
 
 	for n,e in pairs(self.enemys) do
+		if(e.number ~=6 ) then
 		e:draw()
+		end
 	end
     for n,b in pairs(self.ballets) do
 		b:draw()
@@ -390,9 +392,14 @@ function Game:draw()
 	--»­Ñ¡ÔñµÄµï±¤±ß¿ò
 	if self.gselectedBlockhouse ~= nil and self.gselectedBlockhouse.live == 1 then
      	self.gselectedBlockhouse:drawselector()
-
-     	
 	end
+	
+	--draw plane
+	for n,e in pairs(self.enemys) do
+		if(e.number == 6) then
+                e:draw()
+		end
+        end
 
 	if self.win ~= -999 then
 		-- You won!
