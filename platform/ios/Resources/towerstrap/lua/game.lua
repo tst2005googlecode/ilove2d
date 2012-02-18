@@ -176,8 +176,9 @@ function Game.create()
 	temp.mousepointer = {x = 0,
 	                    y = 0}
 	-- 鼠标网格位置					
-	temp.gridpointer = {x = 0,
-	                    y = 0}
+	temp.grid_row = 0
+    temp.grid_col = 0
+     
  	-- Other variables
 	--temp.time = 0 -- the time for this game
 	temp.win = -999 -- if the game is won and timer for fadein
@@ -218,9 +219,9 @@ function Game:draw()
 		love.graphics.print("Towers Trap - [FPS: " .. love.timer.getFPS() .."]",debugareax, debugareay)
 		
 		love.graphics.print("mousepoint(x: " .. self.mousepointer.x .. ",y:" .. self.mousepointer.y,debugareax, debugareay+20)
-		local gridIndex = self.gridpointer.y * COL_NUMS + self.gridpointer.x
+		local gridIndex = self.grid_row * COL_NUMS + self.grid_col
 		if(gridIndex >= 0) and (gridIndex < COL_NUMS * ROW_NUMS - 1) then 
-		love.graphics.print(string.format("gridindex:%d,gridpoint(x:%d,y:%d-%d),canpass(n/a)",gridIndex,self.gridpointer.x,self.gridpointer.y,gridIndex),debugareax, debugareay+40)
+		love.graphics.print(string.format("gridindex:%d,grid_col_row(x:%d,y:%d-%d),canpass(n/a)",gridIndex,self.grid_col,self.grid_row,gridIndex),debugareax, debugareay+40)
 		end
 		if not self.weapons.hover then
 			love.graphics.print("weapons leave", debugareax, debugareay+60) 
@@ -254,8 +255,8 @@ function Game:draw()
 	local selectWeapon = self:getSelectWepons()
 	-- draw 预备放置方框
 	if (selectWeapon >=0) then
-		local gx = self.gridpointer.x
-		local gy = self.gridpointer.y
+		local gx = self.grid_col
+		local gy = self.grid_row
 		local cx = battlearea.top + gx * GRID_SIZE
 		local cy = battlearea.left + gy * GRID_SIZE
 		local i = self:getSelectWepons()	
@@ -267,10 +268,10 @@ function Game:draw()
 		-- 选择了碉堡武器
 		if i >0 then
 			if self.money >= tower_upgrade[i][1].buy_cost and 
-			(self.maps[COL_NUMS*gy + gx+1] == 0) and
-			(self.maps[COL_NUMS*gy + gx +2] == 0)	and
-			(self.maps[COL_NUMS*(gy+1) + gx +1] == 0) and
-			(self.maps[COL_NUMS*(gy+1) + gx+2] == 0) then
+			( love.ai.astargetindexdata(COL_NUMS*gy + gx) == 0) and
+			( love.ai.astargetindexdata(COL_NUMS*gy + gx +1) == 0)	and
+			( love.ai.astargetindexdata(COL_NUMS*(gy+1) + gx) == 0) and
+			( love.ai.astargetindexdata(COL_NUMS*(gy+1) + gx+1) == 0) then
 				love.graphics.setColor(color["grid_open"])
 			else 
 				love.graphics.setColor(color["grid_close"])
@@ -488,24 +489,12 @@ function Game:update(dt)
 		self.button["quit"]:update(dt)
 	else -- 游戏中
 		
-		local x = love.mouse.getX()
-		local y = love.mouse.getY()
-		self.mousepointer.x = x
-		self.mousepointer.y = y
-		local gx = math.floor((x - battlearea.left) / GRID_SIZE)
-		local gy = math.floor((y - battlearea.top) / GRID_SIZE)
-		
-
-		if(gy <= 30) then
-		self.gridpointer.x = gx
-		self.gridpointer.y = gy
-		end
-
-		for n,bh in pairs(self.blockhouses) do
+		self:updateMouseLocation()
+        		for n,bh in pairs(self.blockhouses) do
 			if(bh.live == 0) then
 				-- 设置地图位置为可以通过
-				local gx = bh.gridpointer.x
-				local gy = bh.gridpointer.y
+				local gx = bh.grid_col
+				local gy = bh.grid_row
 				                 
                 love.ai.astarsetindexdata(COL_NUMS*gy + gx, 0)
                 love.ai.astarsetindexdata(COL_NUMS*gy + gx + 1, 0)
@@ -514,10 +503,7 @@ function Game:update(dt)
                 
 				table.remove(self.blockhouses,n)
 
-				self.maps[COL_NUMS*gy + gx + 1] = 0
-				self.maps[COL_NUMS*gy + gx + 2] = 0
-				self.maps[COL_NUMS*(gy+1) + gx + 1] = 0
-				self.maps[COL_NUMS*(gy+1) + gx + 2] = 0
+			 
    			else
 				bh:update(dt)
 			end
@@ -628,6 +614,25 @@ function Game:update(dt)
 	end
 	
 end
+function Game:updateMouseLocation()
+        local x = love.mouse.getX()
+		local y = love.mouse.getY()
+		self.mousepointer.x = x
+		self.mousepointer.y = y
+		local gx = math.floor((x - battlearea.left) / GRID_SIZE)
+		local gy = math.floor((y - battlearea.top) / GRID_SIZE)
+		
+
+		if(gy <= 30) then
+		self.grid_col = gx
+		self.grid_row = gy
+        else
+        self.grid_col = 0
+        self.grid_row = 0
+		end
+
+        end
+
 -- 切换关卡
 function Game:switchStage(dt)
 
@@ -684,31 +689,34 @@ function Game:IsBlocked(from)
 	return isBlocked
 end
 function Game:mousepressed(x, y, button)
-	self.weapons:mousepressed(x, y, button)
+	self:updateMouseLocation()
+    local _x = self.mousepointer.x 
+	local _y = self.mousepointer.y
+    
+    self.weapons:mousepressed(_x, _y, button)
 	
     if(self.gselectedBlockhouse~=nil) then
-        local i = self.gselectedBlockhouse:mousepressed(x, y, button)
+        local i = self.gselectedBlockhouse:mousepressed(_x, _y, button)
         if(i == false) then
 			return
 		end
     end
 	for n,bh in pairs(self.blockhouses) do
 	    if(bh ~= self.gselectedBlockhouse) then
-			local i = bh:mousepressed(x, y, button)
+			local i = bh:mousepressed(_x, _y, button)
 			if(i == false) then
 				return
 			end
 		end
 	end
 	
-	local _x = self.mousepointer.x 
-	local _y = self.mousepointer.y
+	
 	 
 	local gx = math.floor((_x - battlearea.left ) / GRID_SIZE)
 	local gy = math.floor((_y - battlearea.top  ) / GRID_SIZE)
 	
 	-- 下一关 
-	if(x > 3 and x < 55 and y > 855 and y < 950) then
+	if(_x > 3 and _x < 55 and _y > 855 and _y < 950) then
 	    self.time = 0
 	    local bonus = self.stages[self.stage].number
 	    self.scope = self.scope + bonus
@@ -716,7 +724,7 @@ function Game:mousepressed(x, y, button)
 	end
 	
 	-- 按home键 
-	if(x > 3 and x < 55 and y > 950 and y < 1025) then
+	if(_x > 3 and _x < 55 and _y > 950 and _y < 1025) then
 		if self.win ~= -999 or self.health <=0 then
 			state = Menu.create()
 		elseif self.pause then
@@ -727,21 +735,18 @@ function Game:mousepressed(x, y, button)
 	end 
 	local i = self:getSelectWepons()
 	if i >= 0 and self.money >= tower_upgrade[i][1].buy_cost and 
-			(self.maps[COL_NUMS*gy + gx+1] == 0) and
-			(self.maps[COL_NUMS*gy + gx +2] == 0)	and
-			(self.maps[COL_NUMS*(gy+1) + gx +1] == 0) and
-			(self.maps[COL_NUMS*(gy+1) + gx+2] == 0) then
+			( self.grid_col >0 ) and (self.grid_row >0 ) and
+			( love.ai.astargetindexdata(COL_NUMS*gy + gx) == 0) and
+			( love.ai.astargetindexdata(COL_NUMS*gy + gx +1) == 0)	and
+			( love.ai.astargetindexdata(COL_NUMS*(gy+1) + gx) == 0) and
+			( love.ai.astargetindexdata(COL_NUMS*(gy+1) + gx+1) == 0) then
 		-- 增加一个碉堡
 		         
-        love.ai.astarsetindexdata(COL_NUMS*gy + gx, 1)
+                love.ai.astarsetindexdata(COL_NUMS*gy + gx, 1)
                 love.ai.astarsetindexdata(COL_NUMS*gy + gx + 1, 1)
                 love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx , 1)
                 love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx + 1, 1)
-		
-		self.maps[COL_NUMS*gy + gx + 1] = 1
-		self.maps[COL_NUMS*gy + gx + 2] = 1
-		self.maps[COL_NUMS*(gy+1) + gx + 1] = 1
-		self.maps[COL_NUMS*(gy+1) + gx + 2] = 1
+		 
 		
 		if(self:IsBlocked(0) or self:IsBlocked(1)) then
 			             
@@ -749,17 +754,13 @@ function Game:mousepressed(x, y, button)
                 love.ai.astarsetindexdata(COL_NUMS*gy + gx + 1, 0)
                 love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx , 0)
                 love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx + 1, 0)
-			
-			self.maps[COL_NUMS*gy + gx + 1] = 0
-			self.maps[COL_NUMS*gy + gx + 2] = 0
-			self.maps[COL_NUMS*(gy+1) + gx + 1] = 0
-			self.maps[COL_NUMS*(gy+1) + gx + 2] = 0
+			 
 			
 			table.insert(self.hints,Hint.create("fadeout","BLOCK!",480,880))
 		else
-			local blockhouse = Blockhouse.create(i,self.gridpointer)
+			local blockhouse = Blockhouse.create(i,gx,gy)
 	
-			self.blockhouses[20*gy + gx	] = blockhouse
+			self.blockhouses[COL_NUMS * gy + gx	] = blockhouse
 			-- 设置地图位置为不可以通过
  	
 			love.audio.play(sound["create_tower"])

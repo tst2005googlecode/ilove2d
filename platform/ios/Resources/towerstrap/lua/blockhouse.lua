@@ -11,7 +11,7 @@
 Blockhouse = {}
 Blockhouse.__index = Blockhouse
 
-function Blockhouse.create(weapon,mapgridpointer)
+function Blockhouse.create(weapon,grid_col,grid_row)
 	lastselected = nil
 	local temp = {}
 	setmetatable(temp, Blockhouse)
@@ -55,16 +55,15 @@ function Blockhouse.create(weapon,mapgridpointer)
 	    temp.earthquake_action_r = 0
 	end
 	
-
+    temp.grid_col = grid_col
+    temp.grid_row = grid_row
 	temp.width = graphics["blockhous"][weapon]:getWidth()
 	temp.height = graphics["blockhous"][weapon]:getHeight()
-	temp.centX = battlearea.left + (mapgridpointer.x) * GRID_SIZE
-	temp.centY = battlearea.top + (mapgridpointer.y) * GRID_SIZE
-	temp.x = battlearea.left + (mapgridpointer.x + 1) * GRID_SIZE
-	temp.y = battlearea.top + (mapgridpointer.y+1) * GRID_SIZE
-	temp.gridpointer = {}
-	temp.gridpointer.x = mapgridpointer.x
-	temp.gridpointer.y = mapgridpointer.y
+	temp.x = battlearea.left + grid_col * GRID_SIZE
+	temp.y = battlearea.top + grid_row * GRID_SIZE
+	temp.centX = temp.x + GRID_SIZE
+	temp.centY = temp.y + GRID_SIZE
+	 
 
 	--pr(temp.gun,"create blockhouse")
 	return temp
@@ -73,25 +72,25 @@ end
 
 function Blockhouse:draw()
 	local i = self.weapon
-	local gridpointer = self.gridpointer
+	 
 	local cxoffset = 0;
 	if(i == 1) then
 		cxoffset = -2
 	end
-	love.graphics.draw(graphics["blockhous"][i], self.x , self.y, angleToradians(self.angle),  1, 1, self.width/2 + cxoffset, self.height/2)
+	love.graphics.draw(graphics["blockhous"][i], self.centX , self.centY, angleToradians(self.angle),  1, 1, self.width/2 + cxoffset, self.height/2)
 	
 	if self.ice then
 	    love.graphics.setColor(255,255,255,200)
-     	love.graphics.rectangle( "fill", self.x - graphics["bh_border_ice"]:getWidth()/2,self.y - graphics["bh_border_ice"]:getHeight()/2,graphics["bh_border_ice"]:getWidth(),graphics["bh_border_ice"]:getHeight())
-     	love.graphics.draw(graphics["bh_border_ice"],self.x,self.y, 0,  1, 1, graphics["bh_border_ice"]:getWidth()/2 , graphics["bh_border_ice"]:getHeight()/2)
+     	love.graphics.rectangle( "fill", self.x ,self.y  ,graphics["bh_border_ice"]:getWidth(),graphics["bh_border_ice"]:getHeight())
+     	love.graphics.draw(graphics["bh_border_ice"],self.centX,self.centY, 0,  1, 1, graphics["bh_border_ice"]:getWidth()/2 , graphics["bh_border_ice"]:getHeight()/2)
 	else
-		love.graphics.draw(graphics["bh_border"],self.x,self.y, 0,  1, 1, graphics["bh_border"]:getWidth()/2, graphics["bh_border"]:getHeight()/2)
+		love.graphics.draw(graphics["bh_border"],self.centX,self.centY, 0,  1, 1, graphics["bh_border"]:getWidth()/2, graphics["bh_border"]:getHeight()/2)
 	end
 
 	
 	if (self.weapon == 6) and self.earthquake_action_r>0 then
 		love.graphics.setColor(color["shadow"])
-		love.graphics.circle( "fill", self.x, self.y, self.earthquake_action_r*7,255 )
+		love.graphics.circle( "fill", self.centX, self.centY, self.earthquake_action_r*7,255 )
 	end
 	
 
@@ -124,7 +123,7 @@ function Blockhouse:drawselector()
 		local range = tower_upgrade[weapon][level].range*7
 		love.graphics.setColor(color["green_ol"])
 
-		love.graphics.circle( "fill", self.x, self.y, range,255 )
+		love.graphics.circle( "fill", self.centX, self.centY, range,255 )
 
 		-- draw upgrade rectangle
 		love.graphics.setLine( 1 )
@@ -133,24 +132,24 @@ function Blockhouse:drawselector()
 		local textheight = font["tiny"]:getHeight()
 
 		if(self.level < 5) then
-			love.graphics.rectangle( "fill", self.centX, self.centY - GRID_SIZE, GRID_SIZE*2, GRID_SIZE)
+			love.graphics.rectangle( "fill", self.x, self.y - GRID_SIZE, GRID_SIZE*2, GRID_SIZE)
 			love.graphics.setColor(255,155,0)
-			love.graphics.rectangle( "line", self.centX + 1, self.centY + 1 - GRID_SIZE, GRID_SIZE*2 - 2, GRID_SIZE - 2)
+			love.graphics.rectangle( "line", self.x+ 1, self.y + 1 - GRID_SIZE, GRID_SIZE*2 - 2, GRID_SIZE - 2)
 
 			local buy_cost = tower_upgrade[self.weapon][self.level +1 ].buy_cost
 			love.graphics.setColor(color["yellow"])
 			love.graphics.setFont(font["tiny"])
 			local textwidth = font["tiny"]:getWidth(buy_cost)
-			love.graphics.print( buy_cost, self.x - textwidth /2, self.centY - textheight / 2 )
+			love.graphics.print( buy_cost, self.centX - textwidth /2, self.y - GRID_SIZE / 2 )
 		end
 
 		local sell_cost = tower_upgrade[self.weapon][self.level].sell_cost
 		love.graphics.setColor(255,85,32)
-		love.graphics.rectangle( "fill", self.centX, self.y + GRID_SIZE, GRID_SIZE*2, GRID_SIZE)
+		love.graphics.rectangle( "fill", self.x, self.y + GRID_SIZE*2, GRID_SIZE*2, GRID_SIZE)
 		love.graphics.setColor(color["yellow"])
 		love.graphics.setFont(font["tiny"])
 		local textwidth = font["tiny"]:getWidth(sell_cost)
-		love.graphics.print( sell_cost, self.x - textwidth /2, self.y + GRID_SIZE *2 - textheight / 2 )
+		love.graphics.print( sell_cost, self.centX - textwidth /2, self.y + GRID_SIZE*2 + GRID_SIZE  - GRID_SIZE /2 )
 
 
 end
@@ -169,20 +168,20 @@ function Blockhouse:update(dt)
 	local x = love.mouse.getX()
 	local y = love.mouse.getY()
 	
-	if x > self.centX
-		and x < self.centX + self.width
-		and y > self.centY
-		and y < self.centY + self.height then
+	if x > self.x
+		and x < self.x + self.width
+		and y > self.y
+		and y < self.y + self.height then
 		self.hover = true
-	elseif x > self.centX
-	    and x < self.centX + self.width
-	    and y > self.centY - GRID_SIZE
-	    and y < self.centY - 2 then
+	elseif x > self.x
+	    and x < self.x + self.width
+	    and y > self.y - GRID_SIZE
+	    and y < self.y - 2 then
 	    self.hover_up = true
-	elseif x > self.centX
-	    and x < self.centX + self.width
-	    and y > self.y + GRID_SIZE
-	    and y < self.y + GRID_SIZE * 2 then
+	elseif x > self.x
+	    and x < self.x + self.width
+	    and y > self.y + self.height
+	    and y < self.y + self.height + GRID_SIZE then
 	    self.hover_down = true
 	end
 	--print("buildangle:" .. self.buildangle)

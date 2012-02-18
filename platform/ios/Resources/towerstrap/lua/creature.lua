@@ -56,13 +56,13 @@ function Creature.create(game,number,gx,gy,live)
 		temp.angle = 0
 		temp.from = 1 -- left
 		temp.endIndex = (gy+1) * COL_NUMS - 1 -- 475
-		temp.firstx = 66
+		temp.firstx = 50
 
 	else  -- from top
 		temp.angle = 90
 		temp.from = 0 -- top
 		temp.endIndex = COL_NUMS * (ROW_NUMS-1) + gx -- 882
-		temp.firsty = 66
+		temp.firsty = 50
 	end
 	
 	-- 初始化同目的地的坐标差
@@ -416,9 +416,9 @@ function Creature:update(dt)
 		 
             if (self.map and #self.map>0)then
 			for i = 1, #self.map do
-				local index =  self.map[i]+1
+				local index =  self.map[i]
 
-				if self.game.maps[index] == 1 then
+				if love.ai.astargetindexdata(index) == 1 then
 					isNeedReBuildPath = true
 					break
 				end

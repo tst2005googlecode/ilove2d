@@ -214,6 +214,15 @@ namespace ai
         game_map[index] = value;
         return 0;
     }
+    int w_astargetindexdata(lua_State * L)
+    {
+        int index = luaL_checkint( L, 1);
+         
+        if(index >= MAX_MAPSIZE)
+            return luaL_error(L, "out of index %d / %d", index, MAX_MAPSIZE);
+        lua_pushnumber(L, game_map[index]);
+        return 1;
+    }
     int w_astarsetdata(lua_State * L)
 	{
         // 进行下面步骤前先将 table 压入栈顶 
@@ -365,6 +374,7 @@ namespace ai
 	static const luaL_Reg functions[] = {
 		{"astarinit",w_astarinit},
         {"astarsetdata",w_astarsetdata},
+        {"astargetindexdata",w_astargetindexdata},
         {"astarsetindexdata",w_astarsetindexdata},
         {"astarfindpath",w_astarfindpath},
     

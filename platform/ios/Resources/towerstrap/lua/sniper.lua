@@ -65,14 +65,14 @@ function Sniper:update(dt)
 		end
 		local dx = self.target.x - self.blockhouse.x
 		local dy = self.target.y - self.blockhouse.y
-		local angle = (270 + math.atan2(dy, dx)*180/math.pi)%360
+		local angle = (math.atan2(dy, dx)*180/math.pi)%360
 		if(self.blockhouse.angle < angle ) then
-			self.blockhouse.angle =  angle + 90 * dt + 90
+			self.blockhouse.angle =  self.blockhouse.angle + 90 * dt
   		end
 		if(self.blockhouse.angle > angle ) then
-			self.blockhouse.angle = angle - 90 * dt  + 90
+			self.blockhouse.angle = self.blockhouse.angle - 90 * dt
     	end
-  		if(self:isReadyShoot() and math.abs(self.blockhouse.angle - 90 - angle)<5 ) then -- 发射子弹
+  		if(self:isReadyShoot() and math.abs(self.blockhouse.angle - angle) < 5 ) then -- 发射子弹
    			love.audio.play(sound["sniper_fire"])
    			self:reloadGun()
    			table.insert(state.ballets , Ballet.create(0, self,self.blockhouse.x ,self.blockhouse.y ,self.target))

@@ -92,9 +92,12 @@ namespace love
                         i->first->rewindAtomic();
                         i->first->release();
                         available.push(i->second);
-                        playing.erase(i);
+                        playing.erase(i++);
                     }
-                    i++;
+                    else
+                    { 
+                        ++i;
+                    }
                 }
             }
             
@@ -116,6 +119,7 @@ namespace love
                 thread::Lock lock(mutex);
                 
                 bool alreadyPlaying = findSource(source, out);
+                
                 
                 if(!alreadyPlaying)
                 {

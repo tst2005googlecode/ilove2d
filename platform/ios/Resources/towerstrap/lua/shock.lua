@@ -73,14 +73,18 @@ function Shock:update(dt)
         if(self.target.health <=0 or self.target.slowly == true) then -- 跟踪的目标被击毙了或者中了减速弹 
 			self.target = nil
 		else
-			local dx = self.target.x - self.blockhouse.x
-			local dy = self.target.y - self.blockhouse.y
-			local angle = (math.atan2(dy, dx)*180/math.pi)%360
-			if( self.blockhouse.angle > angle ) then
-				self.blockhouse.angle =  (self.blockhouse.angle - 90*dt*5) % 360  
-			else
-				self.blockhouse.angle =  (self.blockhouse.angle + 90*dt*5) % 360  
-			end
+		 local dx = self.target.x - self.blockhouse.x
+		local dy = self.target.y - self.blockhouse.y
+		local angle = (math.atan2(dy, dx)*180/math.pi)%360
+        
+            if(self.blockhouse.angle < angle ) then
+                self.blockhouse.angle =  self.blockhouse.angle + 450 * dt
+            end
+            if(self.blockhouse.angle > angle ) then
+                self.blockhouse.angle = self.blockhouse.angle - 450 * dt
+            end
+        
+			 
 			if(self:isReadyShoot() and math.abs(self.blockhouse.angle - angle)<5 ) then -- 发射子弹
 				love.audio.play(sound["slowdown_fire"])
 				self:reloadGun()

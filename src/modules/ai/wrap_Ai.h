@@ -33,6 +33,7 @@ namespace ai
 	int w_astarinit(lua_State * L);
     int w_astarsetdata(lua_State * L);
     int w_astarsetindexdata(lua_State * L);
+    int w_astargetindexdata(lua_State * L);
     int w_astarfindpath(lua_State * L);
 	extern "C" LOVE_EXPORT int luaopen_love_ai(lua_State * L);
 
