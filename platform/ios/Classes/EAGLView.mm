@@ -97,7 +97,7 @@
     {                  
         [delegate imageTouch:touches withEvent:event whichView:self];          
     }*/
-    NSLog(@"touches begin");
+    //NSLog(@"touches begin");
     UITouch *touch = [touches anyObject];
     CGPoint tpoint = [touch locationInView:[touch view]];
     mousex = tpoint.x;
@@ -115,7 +115,7 @@
 }
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"touches moved");
+    //NSLog(@"touches moved");
     UITouch *touch = [touches anyObject];
     CGPoint tpoint = [touch locationInView:[touch view]];
     mousex = tpoint.x;
@@ -132,7 +132,7 @@
 }
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"touches end");
+    //NSLog(@"touches end");
     UITouch *touch = [touches anyObject];
     CGPoint tpoint = [touch locationInView:[touch view]];
     mousex = tpoint.x;

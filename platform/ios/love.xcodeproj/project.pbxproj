@@ -1702,7 +1702,7 @@
 					"-lpthread",
 					"-lz",
 				);
-				PRODUCT_NAME = love;
+				PRODUCT_NAME = "TowerStrap(HD)";
 				PROVISIONING_PROFILE = "2FD3CF3B-6721-4E4E-A00B-A0B58E8DBEFF";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2FD3CF3B-6721-4E4E-A00B-A0B58E8DBEFF";
 				SDKROOT = iphoneos5.0;
@@ -1745,7 +1745,7 @@
 					"-lpthread",
 					"-lz",
 				);
-				PRODUCT_NAME = love;
+				PRODUCT_NAME = "TowerStrap(HD)";
 				PROVISIONING_PROFILE = "2FD3CF3B-6721-4E4E-A00B-A0B58E8DBEFF";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2FD3CF3B-6721-4E4E-A00B-A0B58E8DBEFF";
 				SDKROOT = iphoneos5.0;

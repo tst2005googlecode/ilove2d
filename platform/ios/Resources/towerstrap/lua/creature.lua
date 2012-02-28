@@ -157,7 +157,7 @@ function Creature:draw()
 	
 	if(debug) then
 		-- 画线路图 
-		if(self.drawMap ~= nil) then
+		if(self.drawMap ~= nil and self.map ~= nil) then
 			for i = 1, #self.map do
 				nextX = self:getX(self.map[i]) * GRID_SIZE + GRID_SIZE /2
 				nextY = self:getY(self.map[i]) * GRID_SIZE *2 /2
@@ -193,8 +193,8 @@ function Creature:draw()
 				love.graphics.draw(graphics["creature"][self.number], self.x, self.y, angleToradians(self.angle),  1, 1, self.width/2, self.height/2)
 			end
 			if(self.slowly == true) then
-				local zoomState = math.max(self.width,self.height) / math.min(graphics["star_circle"]:getWidth(),graphics["star_circle"]:getHeight())
-				love.graphics.draw(graphics["star_circle"], self.x, self.y, angleToradians(self.angle + self.slowly_angle),  zoomState  , zoomState , graphics["star_circle"]:getWidth()/2, graphics["star_circle"]:getHeight()/2)
+				--local zoomState = math.max(self.width,self.height) / math.min(graphics["star_circle"]:getWidth(),graphics["star_circle"]:getHeight())
+				love.graphics.draw(graphics["star_circle"], self.x, self.y, angleToradians(self.angle + self.slowly_angle),  1  , 1 , graphics["star_circle"]:getWidth()/2, graphics["star_circle"]:getHeight()/2)
 			end
 		-- 显示敌人状态
 		if self.hover and debug  then
@@ -265,13 +265,13 @@ function Creature:MoveOnLand(dt)
 		--pr(self.map,"map")
 		local nextX,nextY
 		--print(string.format("check startIndex and endIndex,%d,%d",self.startIndex ,self.endIndex))
-        if(self.map[1] == nil) then
-            pr(self.map,"map")
-        end
+        --if(self.map[1] == nil) then
+        --    pr(self.map,"map")
+        --end
 		nextX = self:getX(self.map[1]) * GRID_SIZE + GRID_SIZE /2
 		nextY = self:getY(self.map[1]) * GRID_SIZE + GRID_SIZE /2
-		if (math.abs(nextX - self.x) + math.abs(nextY - self.y)) < 4 then
-			table.remove(self.map,1)
+		if (math.abs(nextX - self.x) + math.abs(nextY - self.y)) < 4 then 			
+            table.remove(self.map,1)
 			self:ReCaleGridXY()
 			self.startIndex = self.gx + self.gy * COL_NUMS
 		end
@@ -301,11 +301,10 @@ function Creature:MoveOnLand(dt)
 
 
 
-			if(math.abs(dx)>speed or math.abs(dy)>speed) then
+			--if(math.abs(dx)>speed or math.abs(dy)>speed) then
 				self.x = self.x - speed*math.sin(angle*math.pi/180)
 				self.y = self.y + speed*math.cos(angle*math.pi/180)
-
-			end
+			--end
 		end
 	 else -- direct move
 		if self.from == 0 and self.y < self.firsty then -- from top
@@ -316,7 +315,28 @@ function Creature:MoveOnLand(dt)
 		end
 	 end
 end
-function Creature:update(dt)
+function Creature:update(dt,index)
+
+    if (self.freeze >=0) then
+		self.freeze = self.freeze - dt
+		return
+	end
+    if (self.pass) then
+        state.health = state.health - 1
+        table.remove(state.enemys,index)
+		return
+	end
+    
+    if(self.health <=0) then
+							--b.host.target = nil
+							love.audio.play(sound["creature_die"])
+							state.scope = state.scope + self.award
+							state.money = state.money + self.money
+							table.insert(state.hints,Hint.create("fly",self.award,self.x,self.y))
+                            table.remove(state.enemys,index)
+                            return
+	end
+     
 	self.hover = false
 	
 	local x = love.mouse.getX()
@@ -343,33 +363,24 @@ function Creature:update(dt)
 		self.update_time = 0
 		local maxaff = 0
 		for n,bh in pairs(state.blockhouses) do
-			if (bh.live == 1 and math.abs(self.x + self.width - bh.x) < 34 and math.abs(self.y + self.height - bh.y) < 34) then
+			if (bh.ice ~= true and bh.live == 1 and (math.abs(self.x - bh.centX) < (GRID_SIZE * 3) and math.abs(self.y - bh.centY) < (GRID_SIZE * 3))) then
 				bh.ice = true
-				bh.ice_time = 2
+				bh.ice_time = 6
 				maxaff = maxaff + 1
-				if(maxaff >= 8) then
+				if(maxaff >= 1) then
 					break
 				end
 			end
 		end
 	end
 
-	if (self.freeze >=0) then
-		self.freeze = self.freeze - dt
-		return
-	end
+	
 	if x > self.x
 		and x < self.x + self.width
 		and y > self.y - self.height
 		and y < self.y then
 		self.hover = true
 	end
-
-	if (self.health <= 0 ) then
-		return
-	end
-	
-	
 	
 	-- 是否到达目标
 	
@@ -384,6 +395,7 @@ function Creature:update(dt)
 		love.audio.play(sound.creature_rich_dest)
 		return
 	end
+    
 	self.needbuildpath = false;
 	if(self.from == 0 and self.y > self.firsty) then --top
     	self.needbuildpath = true
@@ -400,14 +412,17 @@ function Creature:update(dt)
 			local startIndex = self.startIndex
 			local endIndex = self.endIndex
 			
-            print("love.ai.astarfindpath start ")
+            --print("love.ai.astarfindpath start ")
             self.map = love.ai.astarfindpath( startIndex, endIndex)
-            print("love.ai.astarfindpath end")
+            --print("love.ai.astarfindpath end")
 			
             
 			if (self.map and #self.map>0) then
 				self.foundpath = true
             else
+                print("path not found:%d-%d",startIndex,endIndex)
+                local gamemaps = astargetdata()
+                pr(gamemaps,"gamemaps")
                 self.health = 0
 			end
 		end
@@ -418,7 +433,7 @@ function Creature:update(dt)
 			for i = 1, #self.map do
 				local index =  self.map[i]
 
-				if love.ai.astargetindexdata(index) == 1 then
+				if index >4 and love.ai.astargetindexdata(index) == 1 then
 					isNeedReBuildPath = true
 					break
 				end

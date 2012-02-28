@@ -205,7 +205,7 @@ function Game:draw()
 	love.graphics.setFont(font["tiny"])
 	love.graphics.setColor(color["text"])
 	--if(time_UpdateCapiton <=0) then
-		love.graphics.print("Towers Trap塔防 - [FPS: " .. love.timer.getFPS() .."]",0, 0)
+		love.graphics.print("Towers Trap塔防 - [FPS: " .. love.timer.getFPS() .. ",dt:" .. love.timer.getDelta() .."], paused ?" .. ((self.pause or "true") and "false"),0, 0)
 	--end
 	end	
 		
@@ -327,7 +327,7 @@ function Game:draw()
 				local r, g, b, a = love.graphics.getColor()
 				love.graphics.setColorMode("modulate")
 				love.graphics.setColor(255, 255, 255, 255 - 150 * i / 5)
-				love.graphics.draw(graphics["creature"][creature_number],25,900 - (i-1) * 48 )
+				love.graphics.draw(graphics["creature"][creature_number],25,890 - (i-1) * 48 )
 				love.graphics.setColor(r, g, b, a)
 				love.graphics.setColorMode("replace")
 		   end
@@ -408,11 +408,21 @@ function Game:draw()
 			love.graphics.setColor(255,255,255,235-(100*(self.win/0.5)))
 			love.graphics.rectangle("fill",0,0,love.graphics.getWidth(),love.graphics.getHeight())
 		else
-			love.graphics.setColor(color["overlay"])
-			love.graphics.rectangle("fill",0,0,love.graphics.getWidth(),love.graphics.getHeight())
-			love.graphics.setColor(color["main"])
-			love.graphics.setFont(font["huge"])
-			love.graphics.printf("CONGRATULATIONS", 0, 240, love.graphics.getWidth(), "center")
+            
+		love.graphics.setColor(0,0,0,80)
+		love.graphics.rectangle("fill",0,0,love.graphics.getWidth(),love.graphics.getHeight())
+		
+		love.graphics.setColor(color["menu_border"])
+		love.graphics.setLine(4,"rough")
+		love.graphics.rectangle( "line", 100, 0, love.graphics.getWidth( ) -200,  love.graphics.getHeight( ) ) 
+		love.graphics.setColor(color["menu_bg"])
+		love.graphics.setLine(1)
+		love.graphics.rectangle( "fill", 102, 2, love.graphics.getWidth( ) -204,  love.graphics.getHeight( )-4 ) 
+	
+		love.graphics.setColor(color["blood"])
+		love.graphics.setFont(font["huge"])
+        
+			love.graphics.printf("YOU WIN!", 0, 240, love.graphics.getWidth(), "center")
 			love.graphics.setColor(color["text"])
 			love.graphics.setFont(font["default"])
 			love.graphics.printf("You completed a level " .. self.stage .. " ,Scope is: \n" .. self.scope, 0, 320, love.graphics.getWidth(), "center")
@@ -471,10 +481,12 @@ function Game:update(dt)
 	else
 	    time_UpdateCapiton = 0
 	end
-	if self.win == -999 and self.stage >= table.getn(self.stages) then
+	if self.win == -999 and self.stage >= table.getn(self.stages) and #self.enemys <= 0 then
 		self.win = 1
 	end
-
+    
+    self:updateMouseLocation()
+    
 	if self.win ~= -999 then
 		if self.win > 0 then -- 胜利
 			self.win = self.win - dt
@@ -489,7 +501,7 @@ function Game:update(dt)
 		self.button["quit"]:update(dt)
 	else -- 游戏中
 		
-		self:updateMouseLocation()
+		
         		for n,bh in pairs(self.blockhouses) do
 			if(bh.live == 0) then
 				-- 设置地图位置为可以通过
@@ -521,87 +533,76 @@ function Game:update(dt)
 					local e = b.target 
 					if(math.abs(e.x - b.x) < 16 and math.abs(e.y - b.y) < 16) then
 						e.health = e.health - damage
-						if(e.health <=0) then
-							b.host.target = nil
-							love.audio.play(sound["creature_die"])
-							self.scope = self.scope + e.award
-							self.money = self.money + e.money
-							table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
-						end
+						
 					end
 				elseif (weapon == 2) then-- rocket
 					for n,e in pairs(self.enemys) do
 						if(e.number ~= 6 and math.abs(e.x - b.x) < 16 and math.abs(e.y - b.y) < 16) then
 							e.health = e.health - damage
-							if(e.health <=0) then
-								b.host.target = nil
-								love.audio.play(sound["creature_die"])
-								self.scope = self.scope + e.award
-								self.money = self.money + e.money
-								table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
-							end
+							--if(e.health <=0) then
+							--	b.host.target = nil
+							--	love.audio.play(sound["creature_die"])
+							--	self.scope = self.scope + e.award
+							--	self.money = self.money + e.money
+							--	table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
+							--end
 						end
 					end
     			elseif(weapon == 3) then --range
 					local e = b.target
 					if(math.abs(e.x - b.x) < 16 and math.abs(e.y - b.y) < 16) then
 						e.health = e.health - damage
-						if(e.health <=0) then
-							b.host.target = nil
-							love.audio.play(sound["creature_die"])
-							self.scope = self.scope + e.award
-							self.money = self.money + e.money
-							table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
-						end
+						--if(e.health <=0) then
+						--	b.host.target = nil
+						--	love.audio.play(sound["creature_die"])
+						--	self.scope = self.scope + e.award
+						--	self.money = self.money + e.money
+						--	table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
+						--end
 					end
 				elseif (weapon == 5) then -- air
 				    local e = b.target
 					if(e.number == 6 and math.abs(e.x - b.x) < 16 and math.abs(e.y - b.y) < 16) then
 						e.health = e.health - damage
-						if(e.health <=0) then
-							b.host.target = nil
-							love.audio.play(sound["creature_die"])
-							self.scope = self.scope + e.award
-							self.money = self.money + e.money
-							table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
-						end
+						--if(e.health <=0) then
+						--	b.host.target = nil
+						--	love.audio.play(sound["creature_die"])
+						--	self.scope = self.scope + e.award
+						--	self.money = self.money + e.money
+					--		table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
+						--end
 					end
 				elseif (weapon == 6) then -- earthquake
 					local rangle = 6*7
 					for n,e in pairs(self.enemys) do
 						if(e.number ~= 6 and math.abs(e.x - b.x) < rangle and math.abs(e.y - b.y) < rangle) then
 							e.health = e.health - damage
-							if(e.health <=0) then
-								b.host.target = nil
-								love.audio.play(sound["creature_die"])
-								self.scope = self.scope + e.award
-								self.money = self.money + e.money
-								table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
-							end
+							--if(e.health <=0) then
+								--b.host.target = nil
+								--love.audio.play(sound["creature_die"])
+								--self.scope = self.scope + e.award
+								--self.money = self.money + e.money
+								--table.insert(self.hints,Hint.create("fly",e.award,e.x,e.y))
+							--end
 						end
 					end
-				end  
+				end
+                
+                    
 				table.remove(self.ballets,m)
 			else
 				b:update(dt)
 			end
 		end
 
-		self:switchStage(dt)
-		
 		
 		self.weapons:update(dt)
-		for n,e in pairs(self.enemys) do
-			if(e.health <=0 ) then
-				table.remove(self.enemys,n)
-			elseif(e.pass) then
-				self.health = self.health - 1
-				table.remove(self.enemys,n)
-			else
-				e:update(dt)
-			end
-			
-		end
+        for n,e in pairs(self.enemys) do
+		 
+            e:update(dt,n)
+		 
+        end
+	 
 		
 		for o,s in pairs(self.hints) do
 			if(s.delay >0) then
@@ -610,6 +611,7 @@ function Game:update(dt)
 			    table.remove(self.hints,o)
 			end
 		end
+        self:switchStage(dt)
 		
 	end
 	
@@ -636,7 +638,7 @@ function Game:updateMouseLocation()
 -- 切换关卡
 function Game:switchStage(dt)
 
-	if self.time <= 0 then
+	if self.time <= 0 and self.stage < #self.stages then
 		
 		self.stage = self.stage + 1
 		self.time = self.stages[self.stage].time --时间
@@ -712,11 +714,11 @@ function Game:mousepressed(x, y, button)
 	
 	
 	 
-	local gx = math.floor((_x - battlearea.left ) / GRID_SIZE)
-	local gy = math.floor((_y - battlearea.top  ) / GRID_SIZE)
+	--local gx = math.floor((_x - battlearea.left ) / GRID_SIZE)
+	--local gy = math.floor((_y - battlearea.top  ) / GRID_SIZE)
 	
 	-- 下一关 
-	if(_x > 3 and _x < 55 and _y > 855 and _y < 950) then
+	if(_x > 3 and _x < 55 and _y > 855 and _y < 950 and self.stage < #self.stages) then
 	    self.time = 0
 	    local bonus = self.stages[self.stage].number
 	    self.scope = self.scope + bonus
@@ -725,42 +727,56 @@ function Game:mousepressed(x, y, button)
 	
 	-- 按home键 
 	if(_x > 3 and _x < 55 and _y > 950 and _y < 1025) then
+        local mapstr = ""
+            local maps = love.ai.astargetdata()
+            
+            for n,map in pairs(maps) do
+            mapstr = mapstr .. map
+            if(n  %  COL_NUMS == 0) then
+            mapstr = mapstr .. "\r\n"
+            end
+            
+            end  
+            print(mapstr)  
+
+
 		if self.win ~= -999 or self.health <=0 then
 			state = Menu.create()
 		elseif self.pause then
 			self.pause = false
 		else
 			self.pause = true
-		end
+        end
 	end 
 	local i = self:getSelectWepons()
 	if i >= 0 and self.money >= tower_upgrade[i][1].buy_cost and 
 			( self.grid_col >0 ) and (self.grid_row >0 ) and
-			( love.ai.astargetindexdata(COL_NUMS*gy + gx) == 0) and
-			( love.ai.astargetindexdata(COL_NUMS*gy + gx +1) == 0)	and
-			( love.ai.astargetindexdata(COL_NUMS*(gy+1) + gx) == 0) and
-			( love.ai.astargetindexdata(COL_NUMS*(gy+1) + gx+1) == 0) then
+			( love.ai.astargetindexdata(COL_NUMS*self.grid_row + self.grid_col) == 0) and
+			( love.ai.astargetindexdata(COL_NUMS*self.grid_row + self.grid_col +1) == 0)	and
+			( love.ai.astargetindexdata(COL_NUMS*(self.grid_row+1) + self.grid_col) == 0) and
+			( love.ai.astargetindexdata(COL_NUMS*(self.grid_row+1) + self.grid_col+1) == 0) then
 		-- 增加一个碉堡
 		         
-                love.ai.astarsetindexdata(COL_NUMS*gy + gx, 1)
-                love.ai.astarsetindexdata(COL_NUMS*gy + gx + 1, 1)
-                love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx , 1)
-                love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx + 1, 1)
+                love.ai.astarsetindexdata(COL_NUMS*self.grid_row + self.grid_col, 1)
+                love.ai.astarsetindexdata(COL_NUMS*self.grid_row + self.grid_col + 1, 1)
+                love.ai.astarsetindexdata(COL_NUMS*(self.grid_row+1) + self.grid_col , 1)
+                love.ai.astarsetindexdata(COL_NUMS*(self.grid_row+1) + self.grid_col + 1, 1)
 		 
 		
 		if(self:IsBlocked(0) or self:IsBlocked(1)) then
 			             
-            love.ai.astarsetindexdata(COL_NUMS*gy + gx, 0)
-                love.ai.astarsetindexdata(COL_NUMS*gy + gx + 1, 0)
-                love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx , 0)
-                love.ai.astarsetindexdata(COL_NUMS*(gy+1) + gx + 1, 0)
+            love.ai.astarsetindexdata(COL_NUMS*self.grid_row + self.grid_col, 0)
+                love.ai.astarsetindexdata(COL_NUMS*self.grid_row + self.grid_col + 1, 0)
+                love.ai.astarsetindexdata(COL_NUMS*(self.grid_row+1) + self.grid_col , 0)
+                love.ai.astarsetindexdata(COL_NUMS*(self.grid_row+1) + self.grid_col + 1, 0)
 			 
 			
 			table.insert(self.hints,Hint.create("fadeout","BLOCK!",480,880))
 		else
-			local blockhouse = Blockhouse.create(i,gx,gy)
-	
-			self.blockhouses[COL_NUMS * gy + gx	] = blockhouse
+			table.insert(self.blockhouses,Blockhouse.create(i,self.grid_col,self.grid_row))
+            --local blockhouse = Blockhouse.create(i,self.grid_col,self.grid_row)
+            
+			--self.blockhouses[COL_NUMS * self.grid_row + self.grid_col	] = blockhouse
 			-- 设置地图位置为不可以通过
  	
 			love.audio.play(sound["create_tower"])

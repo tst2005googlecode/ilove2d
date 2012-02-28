@@ -151,7 +151,7 @@ int love_main()
 			argv[n] = new char[ [str length] + 1];
 			strcpy(argv[n], [str UTF8String]);
 		}
-        NSString *gamePath = [NSHomeDirectory() stringByAppendingPathComponent:@"/love.app/towerstrap/"];
+        NSString *gamePath = [NSHomeDirectory() stringByAppendingPathComponent:@"/TowerStrap(HD).app/towerstrap/"];
         NSLog(gamePath);        
         
         argv[argc] = new char[ [gamePath length] + 1];

@@ -32,6 +32,7 @@ namespace ai
     #define MAX_MAPSIZE 10000
 	int w_astarinit(lua_State * L);
     int w_astarsetdata(lua_State * L);
+    int w_astargetdata(lua_State * L);
     int w_astarsetindexdata(lua_State * L);
     int w_astargetindexdata(lua_State * L);
     int w_astarfindpath(lua_State * L);

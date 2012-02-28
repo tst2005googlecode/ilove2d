@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-               BuildableName = "love.app"
+               BuildableName = "TowerStrap(HD).app"
                BlueprintName = "love"
                ReferencedContainer = "container:love.xcodeproj">
             </BuildableReference>
@@ -36,12 +36,13 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
       debugDocumentVersioning = "YES"
+      enablesOpenGLESFrameCapture = "YES"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "love.app"
+            BuildableName = "TowerStrap(HD).app"
             BlueprintName = "love"
             ReferencedContainer = "container:love.xcodeproj">
          </BuildableReference>
@@ -59,7 +60,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "love.app"
+            BuildableName = "TowerStrap(HD).app"
             BlueprintName = "love"
             ReferencedContainer = "container:love.xcodeproj">
          </BuildableReference>

@@ -223,6 +223,7 @@ function Blockhouse:mousepressed(x, y, button)
 	if self.hover then
 		if audio then
 			love.audio.play(sound["click"])
+            pr(self,"blockhouse")
 		end
 		state.gselectedBlockhouse = self
         state.weapons:unSelected()

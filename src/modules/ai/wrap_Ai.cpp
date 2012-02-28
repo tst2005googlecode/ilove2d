@@ -30,7 +30,7 @@
 
 #define DEBUG_LISTS 0
 #define DEBUG_LIST_LENGTHS_ONLY 0
-#define BROKEN_CHAR 1
+#define BROKEN_CHAR 0x00000001
 using namespace std;
 
 namespace love
@@ -40,6 +40,7 @@ namespace ai
 	static Ai * instance = 0;
     static int building_map[MAX_MAPSIZE]; //棋盘地图
     static int game_map[MAX_MAPSIZE];//游戏地图, 0 可以通过，1不可以通过
+    static int map_size = 0;
     static int MAP_WIDTH = 0;
     static int MAP_HEIGHT = 0;
     
@@ -209,9 +210,10 @@ namespace ai
     {
         int index = luaL_checkint( L, 1);
         int value = luaL_checkint( L, 2);
-        if(index >= MAX_MAPSIZE)
+        if(index <0 || index >= MAX_MAPSIZE)
             return luaL_error(L, "out of index %d / %d", index, MAX_MAPSIZE);
         game_map[index] = value;
+        cout << "set grid(" << index / MAP_WIDTH << "," << index % MAP_WIDTH << ") => " << value << endl;
         return 0;
     }
     int w_astargetindexdata(lua_State * L)
@@ -222,6 +224,17 @@ namespace ai
             return luaL_error(L, "out of index %d / %d", index, MAX_MAPSIZE);
         lua_pushnumber(L, game_map[index]);
         return 1;
+    }
+    int w_astargetdata(lua_State * L)
+    {
+        lua_newtable(L);
+        //node->PrintNodeInfo();
+        for (int i = 0; i < map_size; i++) {
+            lua_pushinteger(L, game_map[i]);
+            lua_rawseti(L, -2, i+1);
+        }
+        return 1;
+        
     }
     int w_astarsetdata(lua_State * L)
 	{
@@ -240,7 +253,8 @@ namespace ai
             //printf("%d\n", luaL_checkint( L, -1));
             lua_pop( L, 1 );  // 弹出 value，让 key 留在栈顶
             i++;
-        } 
+        }
+        map_size = i;
         // 现在栈顶是 table
         
 		return 0;
@@ -373,6 +387,7 @@ namespace ai
 	 	// List of functions to wrap.
 	static const luaL_Reg functions[] = {
 		{"astarinit",w_astarinit},
+        {"astargetdata",w_astargetdata},
         {"astarsetdata",w_astarsetdata},
         {"astargetindexdata",w_astargetindexdata},
         {"astarsetindexdata",w_astarsetindexdata},
