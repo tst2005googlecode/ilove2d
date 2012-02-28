@@ -11,9 +11,9 @@ function Menu.create()
 	love.graphics.setBlendMode("alpha") 
 	local temp = {}
 	setmetatable(temp, Menu)
-	temp.button = {	new = Button.create("New Game", love.graphics.getWidth( ) /2, 250),
+	temp.button = {	new = Button.create("New Game", love.graphics.getWidth( ) /2, 220),
 					instructions = Button.create("Instructions", love.graphics.getWidth( ) /2, 300),
-					options = Button.create("Options", love.graphics.getWidth( ) /2, 350),
+					options = Button.create("Options", love.graphics.getWidth( ) /2, 380),
 					quit = Button.create("Quit", love.graphics.getWidth( ) /2, 550) }
 	return temp
 end
@@ -55,7 +55,7 @@ function Menu:mousepressed(x,y,button)
 			elseif n == "options" then
 				state = Options.create()
 			elseif n == "quit" then
-				love.system.exit()
+				love.event.quit( )
 			end
 		end
 	end

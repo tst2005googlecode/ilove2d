@@ -47,7 +47,7 @@ end
 
 function love.keypressed(key)
 	if key == love.key_f4 and (love.keyboard.isDown(love.key_ralt) or love.keyboard.isDown(love.key_lalt)) then
-		love.system.exit()
+		love.event.quit( )
 	end
 	state:keypressed(key)
 end 

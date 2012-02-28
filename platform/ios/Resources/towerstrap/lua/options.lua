@@ -28,8 +28,8 @@ function Options:draw()
 	
 	love.graphics.setColor(color["text"])
 	love.graphics.setFont(font["large"])
-	love.graphics.print("Audio:", 150*1.6, 300*1.6)
-	love.graphics.print("Debug:", 150*1.6, 375)
+	love.graphics.print("Audio:", 200, 480)
+	love.graphics.print("Debug:", 200, 375)
 	
 	love.graphics.setColor(color["main"])
 	love.graphics.setLine(4, "rough")

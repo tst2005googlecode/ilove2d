@@ -27,5 +27,7 @@ function print_r (t, name, indent)
  end 
   
  function pr (t, name) 
+   if not debug then
    print(print_r(t,name)) 
+   end
  end 

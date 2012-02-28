@@ -34,10 +34,10 @@ function Button:draw()
 	else 
 		love.graphics.setColor(unpack(color["menu_text"])) 
 	end
-	
-	love.graphics.print(self.text, self.x, self.y)
+    
+    love.graphics.print(self.text, self.x, self.y)
 	--love.graphics.setLine(1,"rough")
-	--love.graphics.rectangle( "line", self.x, self.y, self.x + self.width,  self.y + self.height ) 
+	--love.graphics.rectangle( "line", self.x, self.y, self.width,  self.height*2 ,0,1,self.height) 
 end
 
 function Button:update(dt)
@@ -50,7 +50,7 @@ function Button:update(dt)
 	if x > self.x
 		and x < self.x + self.width
 		and y > self.y
-        and y < self.y + self.height
+        and y < self.y + self.height * 2
 		 then
 		self.hover = true
 	end

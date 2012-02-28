@@ -201,11 +201,11 @@ function Game:draw()
 	love.graphics.draw(graphics["battle_bg"], 0, 0)
     
 	-- Draw the current FPS.
-	if(not debug) then
+	if(debug) then
 	love.graphics.setFont(font["tiny"])
 	love.graphics.setColor(color["text"])
 	--if(time_UpdateCapiton <=0) then
-		love.graphics.print("Towers TrapËþ·À - [FPS: " .. love.timer.getFPS() .. ",dt:" .. love.timer.getDelta() .."], paused ?" .. ((self.pause or "true") and "false"),0, 0)
+		love.graphics.print("Towers TrapËþ·À - [FPS: " .. love.timer.getFPS() .. ",dt:" .. love.timer.getDelta() .."]",0, 0)
 	--end
 	end	
 		
@@ -616,24 +616,6 @@ function Game:update(dt)
 	end
 	
 end
-function Game:updateMouseLocation()
-        local x = love.mouse.getX()
-		local y = love.mouse.getY()
-		self.mousepointer.x = x
-		self.mousepointer.y = y
-		local gx = math.floor((x - battlearea.left) / GRID_SIZE)
-		local gy = math.floor((y - battlearea.top) / GRID_SIZE)
-		
-
-		if(gy <= 30) then
-		self.grid_col = gx
-		self.grid_row = gy
-        else
-        self.grid_col = 0
-        self.grid_row = 0
-		end
-
-        end
 
 -- ÇÐ»»¹Ø¿¨
 function Game:switchStage(dt)
@@ -690,8 +672,29 @@ function Game:IsBlocked(from)
 
 	return isBlocked
 end
+function Game:updateMouseLocation()
+        local x = love.mouse.getX()
+		local y = love.mouse.getY()
+		self.mousepointer.x = x
+		self.mousepointer.y = y
+		local gx = math.floor((x - battlearea.left) / GRID_SIZE)
+		local gy = math.floor((y - battlearea.top) / GRID_SIZE)
+		
+
+		if(gy <= 30) then
+		self.grid_col = gx
+		self.grid_row = gy
+        else
+        self.grid_col = 0
+        self.grid_row = 0
+		end
+
+end
+
 function Game:mousepressed(x, y, button)
+
 	self:updateMouseLocation()
+    
     local _x = self.mousepointer.x 
 	local _y = self.mousepointer.y
     
@@ -725,30 +728,7 @@ function Game:mousepressed(x, y, button)
 		table.insert(self.hints,Hint.create("fadeout2","TIME BONUS!" .. bonus,480,880))
 	end
 	
-	-- °´home¼ü 
-	if(_x > 3 and _x < 55 and _y > 950 and _y < 1025) then
-        local mapstr = ""
-            local maps = love.ai.astargetdata()
-            
-            for n,map in pairs(maps) do
-            mapstr = mapstr .. map
-            if(n  %  COL_NUMS == 0) then
-            mapstr = mapstr .. "\r\n"
-            end
-            
-            end  
-            print(mapstr)  
-
-
-		if self.win ~= -999 or self.health <=0 then
-			state = Menu.create()
-		elseif self.pause then
-			self.pause = false
-		else
-			self.pause = true
-        end
-	end 
-	local i = self:getSelectWepons()
+		local i = self:getSelectWepons()
 	if i >= 0 and self.money >= tower_upgrade[i][1].buy_cost and 
 			( self.grid_col >0 ) and (self.grid_row >0 ) and
 			( love.ai.astargetindexdata(COL_NUMS*self.grid_row + self.grid_col) == 0) and
@@ -785,24 +765,56 @@ function Game:mousepressed(x, y, button)
 		--self.weapons:unSelected()
 	end
 	if self.win ~= -999 then
-		if self.button["new"]:mousepressed(x, y, button) then
+		if self.button["new"]:mousepressed(_x, _y, button) then
 			state = Game.create()
-		elseif self.button["quit"]:mousepressed(x, y, button) then
+		elseif self.button["quit"]:mousepressed(_x, _y, button) then
 			state = Menu.create()
 		end
 	elseif self.pause then
-		if self.button["resume"]:mousepressed(x, y, button) then
+		if self.button["resume"]:mousepressed(_x, _y, button) then
 			self.pause = false
-		elseif self.button["quit"]:mousepressed(x, y, button) then
+		elseif self.button["quit"]:mousepressed(_x, _y, button) then
 			state = Menu.create()
 		end
 	elseif self.health <=0 then
-		if self.button["new"]:mousepressed(x, y, button) then
+		if self.button["new"]:mousepressed(_x, _y, button) then
 			state = Game.create()
-		elseif self.button["quit"]:mousepressed(x, y, button) then
+		elseif self.button["quit"]:mousepressed(_x, _y, button) then
 			state = Menu.create()
 		end
 	end
+    
+    -- °´home¼ü 
+	if(_x > 3 and _x < 55 and _y > 950 and _y < 1025) then
+        local mapstr = ""
+            local maps = love.ai.astargetdata()
+            
+            for n,map in pairs(maps) do
+            mapstr = mapstr .. map
+            if(n  %  COL_NUMS == 0) then
+            mapstr = mapstr .. "\r\n"
+            end
+            
+            end  
+            print(mapstr)  
+
+
+		if self.win ~= -999 or self.health <=0 then
+			state = Menu.create()
+		elseif self.pause then
+			self.pause = false
+             print("pause change to false")
+		else
+			self.pause = true
+            print("pause change to true")
+        end
+        if self.pause then
+        print("pause now is true")
+        else
+        print("pause now is false")
+        end
+	end 
+
 	
 end
 
